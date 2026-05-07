@@ -15,8 +15,8 @@ return new class extends Migration
   {
     Schema::create('link_type_project', function (Blueprint $table) {
       $table->id();
-      $table->foreignIdFor(Project::class)->constrained();
-      $table->foreignIdFor(LinkType::class)->constrained();
+      $table->foreignIdFor(Project::class)->constrained()->cascadeOnDelete();
+      $table->foreignIdFor(LinkType::class)->constrained()->cascadeOnDelete();
       $table->string('url')->nullable();
       $table->timestamps();
     });

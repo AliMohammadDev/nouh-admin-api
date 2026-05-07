@@ -68,7 +68,7 @@ class Project extends Model implements HasMedia
   public function linkTypes(): BelongsToMany
   {
     return $this->belongsToMany(LinkType::class)
-      ->withPivot('url')
+      ->withPivot('id', 'url')
       ->withTimestamps();
   }
 }

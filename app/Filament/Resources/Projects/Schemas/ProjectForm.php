@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Projects\Schemas;
 
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
@@ -17,34 +19,100 @@ class ProjectForm
       ->components([
         Section::make('معلومات المشروع الأساسية')
           ->schema([
-            Select::make('major_id')
-              ->label('القسم')
-              ->relationship('major', 'name->ar')
-              ->required()
-              ->searchable()
-              ->preload()
-              ->columnSpanFull(),
-
             Grid::make(2)
               ->schema([
+
+                Select::make('category_id')
+                  ->label('الصنف')
+                  ->relationship(
+                    name: 'category',
+                    titleAttribute: 'name',
+                    modifyQueryUsing: fn($query) => $query->select('id', 'name')
+                  )
+                  ->getOptionLabelFromRecordUsing(fn($record) => $record->name['ar'] ?? $record->name['en'])
+                  ->required()
+                  ->searchable()
+                  ->preload(),
+
+                TextInput::make('project_number')
+                  ->label('رقم المشروع')
+                  ->required()
+                  ->unique(ignoreRecord: true),
+
                 TextInput::make('name.ar')
                   ->label('اسم المشروع (بالعربية)')
                   ->required(),
 
                 TextInput::make('name.en')
-                  ->label('Category Name (EN)')
+                  ->label('Project Name (EN)')
                   ->required(),
               ]),
 
-            Textarea::make('body.ar')
+            // إضافة الـ Tags هنا (لأن علاقتك Many-to-Many)
+            Select::make('tags')
+              ->label('الوسوم')
+              ->relationship(
+                name: 'tags',
+                titleAttribute: 'name'
+              )
+              ->getOptionLabelFromRecordUsing(fn($record) => $record->name['ar'] ?? $record->name['en'])
+              ->multiple()
+              ->preload(),
+
+            Textarea::make('description.ar')
               ->label('وصف المشروع (بالعربية)')
+              ->rows(3)
               ->columnSpanFull(),
 
-            Textarea::make('body.en')
-              ->label('Category Description (EN)')
+            Textarea::make('description.en')
+              ->label('Project Description (EN)')
+              ->rows(3)
               ->columnSpanFull(),
-          ])
+          ]),
 
+        Section::make('روابط المشروع')
+          ->description('أضف روابط التواصل الاجتماعي أو الجولات الافتراضية الخاصة بهذا المشروع')
+          ->schema([
+
+            Repeater::make('project_links')
+              ->label('روابط المشروع')
+              ->relationship('linkTypes')
+              ->schema([
+                Select::make('link_type_id')
+                  ->label('نوع المنصة')
+                  ->options(\App\Models\LinkType::all()->pluck('name.ar', 'id'))
+                  ->required()
+                  ->searchable()
+                  ->preload()
+                  ->disableOptionsWhenSelectedInSiblingRepeaterItems()
+                  ->dehydrated(true),
+
+                TextInput::make('url')
+                  ->label('الرابط (URL)')
+                  ->url()
+                  ->required()
+                  ->placeholder('https://...'),
+              ])
+              ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                return [
+                  'link_type_id' => $data['link_type_id'],
+                  'url' => $data['url'],
+                ];
+              })
+              ->columns(2)
+          ]),
+
+        Section::make('معرض الصور')
+          ->schema([
+            SpatieMediaLibraryFileUpload::make('image')
+              ->label('صور المشروع')
+              ->collection('projects')
+              ->disk('public')
+              ->multiple()
+              ->reorderable()
+              ->image()
+              ->columnSpanFull(),
+          ]),
       ])->columns(1);
   }
 }

@@ -104,9 +104,9 @@ class ProjectForm
               ->label('صور المشروع')
               ->collection('projects')
               ->disk('public')
+              ->image()
               ->multiple()
               ->reorderable()
-              ->image()
               ->columnSpanFull(),
           ]),
       ])->columns(1);

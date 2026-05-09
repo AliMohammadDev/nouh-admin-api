@@ -21,7 +21,7 @@ class ProjectsTable
         SpatieMediaLibraryImageColumn::make('image')
           ->label('الصورة')
           ->collection('projects')
-          ->limit(1)
+          ->limit(4)
           ->circular(),
 
         TextColumn::make('name.ar')
@@ -29,14 +29,16 @@ class ProjectsTable
           ->searchable()
           ->sortable(),
 
+
+        TextColumn::make('project_number')
+          ->label('رقم المشروع')
+          ->searchable(),
+
         TextColumn::make('category.name.ar')
           ->label('الصنف')
           ->sortable()
           ->badge(),
 
-        TextColumn::make('project_number')
-          ->label('رقم المشروع')
-          ->searchable(),
 
         TextColumn::make('created_at')
           ->label('تاريخ الإنشاء')
@@ -44,9 +46,7 @@ class ProjectsTable
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
       ])
-      ->filters([
-        // يمكنك إضافة فلتر حسب الصنف هنا لاحقاً
-      ])
+      ->filters([])
       ->recordActions([
         ViewAction::make(),
         EditAction::make(),

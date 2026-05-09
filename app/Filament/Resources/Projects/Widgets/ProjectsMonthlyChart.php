@@ -57,6 +57,6 @@ class ProjectsMonthlyChart extends ChartWidget
 
   protected function getType(): string
   {
-    return 'doughnut';
+    return 'polarArea';
   }
 }

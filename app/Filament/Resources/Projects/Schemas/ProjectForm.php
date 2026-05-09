@@ -71,37 +71,33 @@ class ProjectForm
           ]),
 
         Section::make('روابط المشروع')
-          ->description('أضف روابط التواصل الاجتماعي أو الجولات الافتراضية الخاصة بهذا المشروع')
           ->schema([
-
-            Repeater::make('project_links')
-              ->label('روابط المشروع')
-              ->relationship('linkTypes')
+            Repeater::make('projectLinks')
+              ->relationship()
               ->schema([
+
                 Select::make('link_type_id')
                   ->label('نوع المنصة')
-                  ->options(\App\Models\LinkType::all()->pluck('name.ar', 'id'))
+                  ->relationship(
+                    name: 'linkType',
+                    titleAttribute: 'name'
+                  )
+                  ->getOptionLabelFromRecordUsing(
+                    fn($record) => $record->name['ar'] ?? $record->name['en']
+                  )
                   ->required()
                   ->searchable()
-                  ->preload()
-                  ->disableOptionsWhenSelectedInSiblingRepeaterItems()
-                  ->dehydrated(true),
+                  ->preload(),
 
                 TextInput::make('url')
-                  ->label('الرابط (URL)')
+                  ->label('الرابط')
                   ->url()
-                  ->required()
-                  ->placeholder('https://...'),
-              ])
-              ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
-                return [
-                  'link_type_id' => $data['link_type_id'],
-                  'url' => $data['url'],
-                ];
-              })
-              ->columns(2)
-          ]),
+                  ->required(),
 
+              ])
+              ->columns(2)
+              ->reorderable(false),
+          ]),
         Section::make('معرض الصور')
           ->schema([
             SpatieMediaLibraryFileUpload::make('image')

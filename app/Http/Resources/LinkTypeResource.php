@@ -17,6 +17,7 @@ class LinkTypeResource extends JsonResource
     return [
       'id' => $this->id,
       'name' => $this->translated_name,
+      'image' => $this->getFirstMediaUrl('link_types', 'default'),
     ];
   }
 }

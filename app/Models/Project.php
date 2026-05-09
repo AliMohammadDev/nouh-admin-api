@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\MediaLibrary\ProjectPathGenerator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Image\Enums\Fit;
 
@@ -64,11 +65,15 @@ class Project extends Model implements HasMedia
   {
     return $this->belongsToMany(Tag::class)->withTimestamps();
   }
+  public function projectLinks(): HasMany
+  {
+    return $this->hasMany(ProjectLink::class);
+  }
 
   public function linkTypes(): BelongsToMany
   {
-    return $this->belongsToMany(LinkType::class)
-      ->withPivot('id', 'url')
+    return $this->belongsToMany(LinkType::class, 'link_type_project')
+      ->withPivot('url')
       ->withTimestamps();
   }
 }

@@ -6,9 +6,9 @@ use App\Models\Project;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
 
-class ProjectsWeeklyChart extends ChartWidget
+class ProjectsMonthlyChart extends ChartWidget
 {
-  protected ?string $heading = 'المشاريع المضافة أسبوعياً';
+  protected ?string $heading = 'المشاريع حسب الأشهر';
 
   protected function getData(): array
   {
@@ -17,24 +17,26 @@ class ProjectsWeeklyChart extends ChartWidget
     $colors = [];
 
     $palette = [
-      '#3B82F6', // blue
-      '#10B981', // green
-      '#F59E0B', // yellow
-      '#EF4444', // red
-      '#8B5CF6', // purple
-      '#06B6D4', // cyan
-      '#F97316', // orange
+      '#3B82F6',
+      '#10B981',
+      '#F59E0B',
+      '#EF4444',
+      '#8B5CF6',
+      '#06B6D4',
+      '#F97316',
     ];
 
-    for ($i = 6; $i >= 0; $i--) {
+    for ($i = 5; $i >= 0; $i--) {
 
-      $date = Carbon::now()->subDays($i);
+      $date = Carbon::now()->subMonths($i);
 
-      $labels[] = $date->format('D');
+      $labels[] = $date->format('M Y');
 
-      $data[] = Project::whereDate('created_at', $date->format('Y-m-d'))->count();
+      $data[] = Project::whereYear('created_at', $date->year)
+        ->whereMonth('created_at', $date->month)
+        ->count();
 
-      $colors[] = $palette[6 - $i];
+      $colors[] = $palette[5 - $i];
     }
 
     return [
@@ -42,12 +44,9 @@ class ProjectsWeeklyChart extends ChartWidget
         [
           'label' => 'المشاريع',
           'data' => $data,
-
           'backgroundColor' => $colors,
-
           'borderColor' => '#ffffff',
           'borderWidth' => 2,
-
           'hoverOffset' => 10,
         ],
       ],
@@ -58,6 +57,6 @@ class ProjectsWeeklyChart extends ChartWidget
 
   protected function getType(): string
   {
-    return 'pie';
+    return 'doughnut';
   }
 }

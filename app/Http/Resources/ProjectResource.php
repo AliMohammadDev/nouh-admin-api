@@ -23,6 +23,9 @@ class ProjectResource extends JsonResource
       'all_images' => $this->getMedia('projects')->map(function ($media) {
         return $media->getUrl('default');
       }),
+      'all_images_vr' => $this->getMedia('vr_images')->map(function ($media) {
+        return $media->getUrl('default');
+      }),
       'category' => new CategoryResource($this->whenLoaded('category')),
       'tags' => TagResource::collection($this->whenLoaded('tags')),
       'links' => $this->linkTypes->map(fn($link) => [

@@ -112,16 +112,41 @@ class ProjectInfolist
               ]),
 
           ]),
-        Section::make('معرض الصور')
+        Section::make('معرض المشروع')
           ->icon('heroicon-o-photo')
           ->schema([
 
-            SpatieMediaLibraryImageEntry::make('images')
-              ->label('')
-              ->collection('projects')
-              ->circular()
-              ->stacked()
-              ->limit(5),
+            Grid::make(2)
+              ->schema([
+
+                Section::make('الصور العادية')
+                  ->schema([
+
+                    SpatieMediaLibraryImageEntry::make('images')
+                      ->label('')
+                      ->collection('projects')
+
+                      ->limit(8)
+                      ->hiddenLabel(),
+
+                  ]),
+
+                Section::make('صور VR / Panorama')
+                  ->schema([
+
+                    SpatieMediaLibraryImageEntry::make('vr_images')
+                      ->label('')
+                      ->collection('vr_images')
+                      ->limit(8)
+                      ->hiddenLabel(),
+
+                  ])
+                  ->visible(
+                    fn($record) =>
+                    $record->getMedia('vr_images')->count() > 0
+                  ),
+
+              ]),
 
           ]),
 

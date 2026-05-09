@@ -18,10 +18,18 @@ class ProjectsTable
   {
     return $table
       ->columns([
-        SpatieMediaLibraryImageColumn::make('image')
-          ->label('الصورة')
+        SpatieMediaLibraryImageColumn::make('projects')
+          ->label('الصور')
           ->collection('projects')
           ->limit(4)
+          ->stacked()
+          ->circular(),
+
+        SpatieMediaLibraryImageColumn::make('vr_images')
+          ->label('VR')
+          ->collection('vr_images')
+          ->limit(4)
+          ->stacked()
           ->circular(),
 
         TextColumn::make('name.ar')

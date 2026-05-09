@@ -108,6 +108,16 @@ class ProjectForm
               ->multiple()
               ->reorderable()
               ->columnSpanFull(),
+
+            SpatieMediaLibraryFileUpload::make('vr_images')
+              ->label('صور VR / Panorama')
+              ->collection('vr_images')
+              ->disk('public')
+              ->image()
+              ->multiple()
+              ->reorderable()
+              ->columnSpanFull()
+              ->helperText('قم برفع صور 360 أو Panorama الخاصة بالمشروع'),
           ]),
       ])->columns(1);
   }

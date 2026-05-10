@@ -45,6 +45,12 @@ class ProjectInfolist
                   ->copyable()
                   ->color('warning'),
 
+                TextEntry::make('url_youtube')
+                  ->label('رابط المشروع على يوتيوب')
+                  ->size(TextSize::Large)
+                  ->copyable()
+                  ->color('warning'),
+
               ]),
 
             Grid::make(1)

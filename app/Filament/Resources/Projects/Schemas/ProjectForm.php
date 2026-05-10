@@ -19,7 +19,7 @@ class ProjectForm
       ->components([
         Section::make('معلومات المشروع الأساسية')
           ->schema([
-            Grid::make(2)
+            Grid::make(3)
               ->schema([
 
                 Select::make('category_id')
@@ -39,6 +39,11 @@ class ProjectForm
                   ->required()
                   ->unique(ignoreRecord: true),
 
+                TextInput::make('url_youtube')
+                  ->label('رابط المشروع على يوتيوب')
+                  ->required()
+                  ->unique(ignoreRecord: true),
+
                 TextInput::make('name.ar')
                   ->label('اسم المشروع (بالعربية)')
                   ->required(),
@@ -48,7 +53,6 @@ class ProjectForm
                   ->required(),
               ]),
 
-            // إضافة الـ Tags هنا (لأن علاقتك Many-to-Many)
             Select::make('tags')
               ->label('الوسوم')
               ->relationship(

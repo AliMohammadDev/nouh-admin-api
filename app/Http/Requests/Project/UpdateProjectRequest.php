@@ -32,6 +32,7 @@ class UpdateProjectRequest extends FormRequest
       'description.ar' => ['sometimes', 'string'],
 
       'project_number' => ['sometimes', 'string', 'unique:projects,project_number,' . $this->route('project')],
+      'url_youtube' => ['sometimes', 'string', 'unique:projects,url_youtube'],
       'category_id' => ['sometimes', 'exists:categories,id'],
 
       'tags' => ['nullable', 'array'],

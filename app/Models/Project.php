@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Image\Enums\Fit;
 
-#[Fillable(['name', 'category_id', 'description', 'project_number'])]
+#[Fillable(['name', 'category_id', 'description', 'project_number', 'url_youtube'])]
 class Project extends Model implements HasMedia
 {
   use HasFactory, InteractsWithMedia;

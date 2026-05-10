@@ -32,6 +32,7 @@ class CreateProjectRequest extends FormRequest
       'description.ar' => ['required', 'string'],
 
       'project_number' => ['required', 'string', 'unique:projects,project_number'],
+      'url_youtube' => ['required', 'string', 'unique:projects,url_youtube'],
       'category_id' => ['required', 'exists:categories,id'],
 
       'tags' => ['nullable', 'array'],

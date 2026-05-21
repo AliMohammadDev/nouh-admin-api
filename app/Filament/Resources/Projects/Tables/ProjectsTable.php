@@ -42,9 +42,6 @@ class ProjectsTable
           ->label('رقم المشروع')
           ->searchable(),
 
-        TextColumn::make('url_youtube')
-          ->label('رابط المشروع على يوتيوب')
-          ->searchable(),
 
         TextColumn::make('category.name.ar')
           ->label('الصنف')

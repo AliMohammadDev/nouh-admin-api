@@ -19,7 +19,6 @@ class ProjectResource extends JsonResource
       'name' => $this->translated_name,
       'description' => $this->translated_description,
       'project_number' => $this->project_number,
-      'url_youtube' => $this->url_youtube,
       'image' => $this->getFirstMediaUrl('projects', 'default'),
       'image_vr' => $this->getFirstMediaUrl('vr_images', 'default'),
 

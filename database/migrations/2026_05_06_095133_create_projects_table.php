@@ -18,7 +18,6 @@ return new class extends Migration
       $table->json('name');
       $table->json('description');
       $table->string('project_number');
-      $table->string('url_youtube');
       $table->timestamps();
     });
   }

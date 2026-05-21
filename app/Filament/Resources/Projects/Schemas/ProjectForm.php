@@ -39,10 +39,7 @@ class ProjectForm
                   ->required()
                   ->unique(ignoreRecord: true),
 
-                TextInput::make('url_youtube')
-                  ->label('رابط المشروع على يوتيوب')
-                  ->required()
-                  ->unique(ignoreRecord: true),
+
 
                 TextInput::make('name.ar')
                   ->label('اسم المشروع (بالعربية)')

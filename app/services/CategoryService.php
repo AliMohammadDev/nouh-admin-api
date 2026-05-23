@@ -10,7 +10,7 @@ class CategoryService
 {
   public function findAll()
   {
-    return Category::with('major')->get();
+    return Category::with(['major', 'projects.media'])->get();
   }
 
   public function createCategory(array $data)
@@ -21,7 +21,7 @@ class CategoryService
 
   public function findOne(Category $category)
   {
-    return $category->load('major');
+    return $category->load(['major', 'projects.media']);
   }
 
   public function updateCategory(Category $category, array $data)

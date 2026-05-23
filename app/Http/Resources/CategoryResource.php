@@ -19,6 +19,8 @@ class CategoryResource extends JsonResource
       'name' => $this->translated_name,
       'description' => $this->translated_description,
       'major' => new MajorResource($this->whenLoaded('major')),
+
+      'projects' => ProjectResource::collection($this->whenLoaded('projects')),
     ];
   }
 }

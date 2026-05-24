@@ -11,6 +11,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\TextSize;
 use Filament\Tables\Grouping\Group;
+use Filament\Infolists\Components\IconEntry;
 
 class ProjectInfolist
 {
@@ -23,7 +24,7 @@ class ProjectInfolist
           ->icon('heroicon-o-information-circle')
           ->schema([
 
-            Grid::make(3)
+            Grid::make(4)
               ->schema([
 
                 TextEntry::make('name.ar')
@@ -45,7 +46,13 @@ class ProjectInfolist
                   ->copyable()
                   ->color('warning'),
 
-
+                IconEntry::make('is_featured')
+                  ->label('مشروع مميز؟')
+                  ->boolean()
+                  ->trueIcon('heroicon-s-star')
+                  ->falseIcon('heroicon-o-x-circle')
+                  ->trueColor('warning') // سيعطي النجمة لوناً أصفراً/ذهبياً جذاباً
+                  ->falseColor('gray'),
 
               ]),
 

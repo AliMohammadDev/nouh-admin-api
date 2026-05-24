@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Image\Enums\Fit;
 
-#[Fillable(['name', 'category_id', 'description', 'project_number'])]
+#[Fillable(['name', 'category_id', 'description', 'project_number', 'is_featured'])]
 class Project extends Model implements HasMedia
 {
   use HasFactory, InteractsWithMedia;
@@ -23,6 +23,7 @@ class Project extends Model implements HasMedia
   protected $casts = [
     'name' => 'array',
     'description' => 'array',
+    'is_featured' => 'boolean',
   ];
 
   protected static function booting(): void

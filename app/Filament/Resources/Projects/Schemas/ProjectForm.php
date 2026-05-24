@@ -10,6 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Toggle;
 
 class ProjectForm
 {
@@ -39,6 +40,13 @@ class ProjectForm
                   ->required()
                   ->unique(ignoreRecord: true),
 
+                Toggle::make('is_featured')
+                  ->label('مشروع مميز؟')
+                  ->inline(false)
+                  ->onIcon('heroicon-m-star')
+                  ->offIcon('heroicon-m-x-mark')
+                  ->onColor('warning')
+                  ->default(false),
 
 
                 TextInput::make('name.ar')

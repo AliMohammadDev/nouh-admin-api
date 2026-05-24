@@ -18,6 +18,8 @@ return new class extends Migration
       $table->json('name');
       $table->json('description');
       $table->string('project_number');
+
+      $table->boolean('is_featured')->default(false);
       $table->timestamps();
     });
   }

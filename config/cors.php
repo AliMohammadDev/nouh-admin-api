@@ -15,11 +15,11 @@ return [
     |
     */
 
-  'paths' => ['api/*', 'storage/*', 'sanctum/csrf-cookie'],
+  'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
   'allowed_methods' => ['*'],
 
-  'allowed_origins' => ['*'],
+  'allowed_origins' => ['https://www.nouh-agency.com', 'http://localhost:5173'],
 
   'allowed_origins_patterns' => [],
 

@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TagController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::middleware(['setLocale'])->group(function () {
 
   Route::apiResource('majors', MajorController::class);
@@ -16,3 +15,6 @@ Route::middleware(['setLocale'])->group(function () {
   Route::apiResource('projects', ProjectController::class);
   Route::apiResource('tags', TagController::class);
 });
+
+// for image vr 360
+Route::get('/vr-proxy', [ProjectController::class, 'vrProxy']);

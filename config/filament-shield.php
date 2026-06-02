@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use BezhanSalleh\FilamentShield\Resources\Roles\RoleResource;
 use Filament\Pages\Dashboard;
 use Filament\Widgets\AccountWidget;
@@ -8,7 +9,7 @@ use Filament\Widgets\FilamentInfoWidget;
 
 return [
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Shield Resource
     |--------------------------------------------------------------------------
@@ -19,19 +20,21 @@ return [
     |
     */
 
-    'shield_resource' => [
-        'slug' => 'shield/roles',
-        'show_model_path' => true,
-        'cluster' => null,
-        'tabs' => [
-            'pages' => true,
-            'widgets' => true,
-            'resources' => true,
-            'custom_permissions' => false,
-        ],
+  'shield_resource' => [
+    'slug' => 'shield/roles',
+    'show_model_path' => true,
+    'cluster' => null,
+    'navigation_group' => 'إدارة الحسابات',
+    'navigation_sort' => 100,
+    'tabs' => [
+      'pages' => true,
+      'widgets' => true,
+      'resources' => true,
+      'custom_permissions' => false,
     ],
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Multi-Tenancy
     |--------------------------------------------------------------------------
@@ -42,9 +45,9 @@ return [
     |
     */
 
-    'tenant_model' => null,
+  'tenant_model' => null,
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | User Model
     |--------------------------------------------------------------------------
@@ -55,9 +58,9 @@ return [
     |
     */
 
-    'auth_provider_model' => 'App\\Models\\User',
+  'auth_provider_model' => 'App\\Models\\User',
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Super Admin
     |--------------------------------------------------------------------------
@@ -68,14 +71,14 @@ return [
     |
     */
 
-    'super_admin' => [
-        'enabled' => true,
-        'name' => 'super_admin',
-        'define_via_gate' => false,
-        'intercept_gate' => 'before',
-    ],
+  'super_admin' => [
+    'enabled' => true,
+    'name' => 'super_admin',
+    'define_via_gate' => false,
+    'intercept_gate' => 'before',
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Panel User
     |--------------------------------------------------------------------------
@@ -86,12 +89,12 @@ return [
     |
     */
 
-    'panel_user' => [
-        'enabled' => true,
-        'name' => 'panel_user',
-    ],
+  'panel_user' => [
+    'enabled' => true,
+    'name' => 'panel_user',
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Permission Builder
     |--------------------------------------------------------------------------
@@ -104,13 +107,13 @@ return [
     |
     */
 
-    'permissions' => [
-        'separator' => ':',
-        'case' => 'pascal',
-        'generate' => true,
-    ],
+  'permissions' => [
+    'separator' => ':',
+    'case' => 'pascal',
+    'generate' => true,
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Policies
     |--------------------------------------------------------------------------
@@ -121,25 +124,35 @@ return [
     |
     */
 
-    'policies' => [
-        'path' => app_path('Policies'),
-        'merge' => true,
-        'generate' => true,
-        'methods' => [
-            'viewAny', 'view', 'create', 'update', 'delete', 'deleteAny', 'restore',
-            'forceDelete', 'forceDeleteAny', 'restoreAny', 'replicate', 'reorder',
-        ],
-        'single_parameter_methods' => [
-            'viewAny',
-            'create',
-            'deleteAny',
-            'forceDeleteAny',
-            'restoreAny',
-            'reorder',
-        ],
+  'policies' => [
+    'path' => app_path('Policies'),
+    'merge' => true,
+    'generate' => true,
+    'methods' => [
+      'viewAny',
+      'view',
+      'create',
+      'update',
+      'delete',
+      'deleteAny',
+      'restore',
+      'forceDelete',
+      'forceDeleteAny',
+      'restoreAny',
+      'replicate',
+      'reorder',
     ],
+    'single_parameter_methods' => [
+      'viewAny',
+      'create',
+      'deleteAny',
+      'forceDeleteAny',
+      'restoreAny',
+      'reorder',
+    ],
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Localization
     |--------------------------------------------------------------------------
@@ -150,12 +163,12 @@ return [
     |
     */
 
-    'localization' => [
-        'enabled' => false,
-        'key' => 'filament-shield::filament-shield.resource_permission_prefixes_labels',
-    ],
+  'localization' => [
+    'enabled' => false,
+    'key' => 'filament-shield::filament-shield.resource_permission_prefixes_labels',
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Resources
     |--------------------------------------------------------------------------
@@ -166,23 +179,23 @@ return [
     |
     */
 
-    'resources' => [
-        'subject' => 'model',
-        'manage' => [
-            RoleResource::class => [
-                'viewAny',
-                'view',
-                'create',
-                'update',
-                'delete',
-            ],
-        ],
-        'exclude' => [
-            //
-        ],
+  'resources' => [
+    'subject' => 'model',
+    'manage' => [
+      RoleResource::class => [
+        'viewAny',
+        'view',
+        'create',
+        'update',
+        'delete',
+      ],
     ],
+    'exclude' => [
+      //
+    ],
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Pages
     |--------------------------------------------------------------------------
@@ -193,15 +206,15 @@ return [
     |
     */
 
-    'pages' => [
-        'subject' => 'class',
-        'prefix' => 'view',
-        'exclude' => [
-            Dashboard::class,
-        ],
+  'pages' => [
+    'subject' => 'class',
+    'prefix' => 'view',
+    'exclude' => [
+      Dashboard::class,
     ],
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Widgets
     |--------------------------------------------------------------------------
@@ -212,16 +225,16 @@ return [
     |
     */
 
-    'widgets' => [
-        'subject' => 'class',
-        'prefix' => 'view',
-        'exclude' => [
-            AccountWidget::class,
-            FilamentInfoWidget::class,
-        ],
+  'widgets' => [
+    'subject' => 'class',
+    'prefix' => 'view',
+    'exclude' => [
+      AccountWidget::class,
+      FilamentInfoWidget::class,
     ],
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Custom Permissions
     |--------------------------------------------------------------------------
@@ -232,9 +245,9 @@ return [
     |
     */
 
-    'custom_permissions' => [],
+  'custom_permissions' => [],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Entity Discovery
     |--------------------------------------------------------------------------
@@ -245,13 +258,13 @@ return [
     |
     */
 
-    'discovery' => [
-        'discover_all_resources' => false,
-        'discover_all_widgets' => false,
-        'discover_all_pages' => false,
-    ],
+  'discovery' => [
+    'discover_all_resources' => false,
+    'discover_all_widgets' => false,
+    'discover_all_pages' => false,
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Role Policy
     |--------------------------------------------------------------------------
@@ -262,6 +275,6 @@ return [
     |
     */
 
-    'register_role_policy' => true,
+  'register_role_policy' => true,
 
 ];

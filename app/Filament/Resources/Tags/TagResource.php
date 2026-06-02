@@ -26,7 +26,8 @@ class TagResource extends Resource
   protected static ?string $navigationLabel = 'الوسوم (Tags)';
   protected static ?string $pluralModelLabel = 'الوسوم';
   protected static ?string $modelLabel = 'وسم';
-  protected static string|UnitEnum|null $navigationGroup = 'إدارة الإعدادات';
+  protected static string|UnitEnum|null $navigationGroup = 'إدارة المشاريع';
+
   protected static ?int $navigationSort = 4;
 
   public static function form(Schema $schema): Schema

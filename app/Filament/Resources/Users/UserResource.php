@@ -30,7 +30,6 @@ class UserResource extends Resource
   protected static string|UnitEnum|null $navigationGroup = 'إدارة الحسابات';
 
 
-
   public static function form(Schema $schema): Schema
   {
     return UserForm::configure($schema);

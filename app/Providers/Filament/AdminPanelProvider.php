@@ -22,7 +22,6 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Support\Facades\Blade;
 
 
-
 class AdminPanelProvider extends PanelProvider
 {
   public function panel(Panel $panel): Panel
@@ -54,7 +53,6 @@ class AdminPanelProvider extends PanelProvider
         </style>
     '),
       )
-
       ->renderHook(
         \Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER,
         fn(): string => Blade::render('
@@ -93,6 +91,7 @@ class AdminPanelProvider extends PanelProvider
       ])
       ->plugins([
         FilamentShieldPlugin::make(),
+
       ])
       ->authMiddleware([
         Authenticate::class,

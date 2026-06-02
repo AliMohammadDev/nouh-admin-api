@@ -79,4 +79,15 @@ class ProjectController extends Controller
       ->header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization")
       ->header("Access-Control-Allow-Credentials", "true");
   }
+
+  public function related(Project $project)
+  {
+    $relatedProjects = Project::where('category_id', $project->category_id)
+      ->where('id', '!=', $project->id)
+      ->latest()
+      ->take(4)
+      ->get();
+
+    return ProjectResource::collection($relatedProjects);
+  }
 }

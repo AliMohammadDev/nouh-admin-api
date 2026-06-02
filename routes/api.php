@@ -12,6 +12,7 @@ Route::middleware(['setLocale'])->group(function () {
   Route::apiResource('majors', MajorController::class);
   Route::apiResource('link-types', LinkTypeController::class);
   Route::apiResource('categories', CategoryController::class);
+  Route::get('projects/{project}/related', [ProjectController::class, 'related']);
   Route::apiResource('projects', ProjectController::class);
   Route::apiResource('tags', TagController::class);
 });

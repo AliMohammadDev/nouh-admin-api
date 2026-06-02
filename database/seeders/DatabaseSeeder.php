@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
+
+    $this->command->call('shield:generate', ['--all' => true]);
+
     $this->call([
       AdminSeeder::class,
       MajorSeeder::class,

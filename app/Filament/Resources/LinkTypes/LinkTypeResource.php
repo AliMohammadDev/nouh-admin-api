@@ -11,6 +11,7 @@ use App\Filament\Resources\LinkTypes\Schemas\LinkTypeInfolist;
 use App\Filament\Resources\LinkTypes\Tables\LinkTypesTable;
 use App\Models\LinkType;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -20,9 +21,8 @@ use UnitEnum;
 
 class LinkTypeResource extends Resource
 {
+  use HasPageShield;
   protected static ?string $model = LinkType::class;
-
-
   protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-link';
   protected static ?string $navigationLabel = 'أنواع الروابط';
   protected static ?string $pluralModelLabel = 'أنواع الروابط';

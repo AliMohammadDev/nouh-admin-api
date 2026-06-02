@@ -51,7 +51,7 @@ class ProjectInfolist
                   ->boolean()
                   ->trueIcon('heroicon-s-star')
                   ->falseIcon('heroicon-o-x-circle')
-                  ->trueColor('warning') // سيعطي النجمة لوناً أصفراً/ذهبياً جذاباً
+                  ->trueColor('warning')
                   ->falseColor('gray'),
 
               ]),

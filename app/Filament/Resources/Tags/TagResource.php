@@ -11,6 +11,7 @@ use App\Filament\Resources\Tags\Schemas\TagInfolist;
 use App\Filament\Resources\Tags\Tables\TagsTable;
 use App\Models\Tag;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,7 @@ use UnitEnum;
 
 class TagResource extends Resource
 {
+  use HasPageShield;
   protected static ?string $model = Tag::class;
   protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
   protected static ?string $navigationLabel = 'الوسوم (Tags)';

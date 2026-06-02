@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Resources\Projects\Widgets\ProjectsMonthlyChart;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use App\Filament\Resources\Projects\Widgets\ProjectsPerCategoryChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -18,6 +19,8 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Support\Facades\Blade;
+
 
 
 class AdminPanelProvider extends PanelProvider
@@ -51,6 +54,21 @@ class AdminPanelProvider extends PanelProvider
         </style>
     '),
       )
+
+      ->renderHook(
+        \Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER,
+        fn(): string => Blade::render('
+          <div class="">
+              <a href="https://www.nouh-agency.com"
+                target="_blank"
+                title="الذهاب إلى الموقع الإلكتروني"
+              >
+                  <span class="hidden md:inline text-sm font-bold ms-1">زيارة الموقع الإلكتروني</span>
+              </a>
+          </div>
+      '),
+      )
+
       ->globalSearch(false)
       ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
       ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -72,6 +90,9 @@ class AdminPanelProvider extends PanelProvider
         SubstituteBindings::class,
         DisableBladeIconComponents::class,
         DispatchServingFilamentEvent::class,
+      ])
+      ->plugins([
+        FilamentShieldPlugin::make(),
       ])
       ->authMiddleware([
         Authenticate::class,

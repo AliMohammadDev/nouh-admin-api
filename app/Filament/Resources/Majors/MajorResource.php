@@ -11,6 +11,7 @@ use App\Filament\Resources\Majors\Schemas\MajorInfolist;
 use App\Filament\Resources\Majors\Tables\MajorsTable;
 use App\Models\Major;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -19,6 +20,7 @@ use UnitEnum;
 
 class MajorResource extends Resource
 {
+  use HasPageShield;
   protected static ?string $model = Major::class;
   protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
   protected static ?string $navigationLabel = 'الأقسام';

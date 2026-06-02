@@ -59,4 +59,9 @@ class ProjectsMonthlyChart extends ChartWidget
   {
     return 'polarArea';
   }
+
+  public static function canView(): bool
+  {
+    return auth()->user()->can('view_any_projects::project');
+  }
 }

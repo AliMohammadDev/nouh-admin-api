@@ -18,6 +18,9 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsOverview extends StatsOverviewWidget
 {
+
+  protected ?string $heading = 'إحصائيات النظام العامة';
+
   protected function getStats(): array
   {
     return [
@@ -61,5 +64,10 @@ class StatsOverview extends StatsOverviewWidget
 
 
     ];
+  }
+
+  public static function canView(): bool
+  {
+    return auth()->user()->can('view_any_projects::project');
   }
 }

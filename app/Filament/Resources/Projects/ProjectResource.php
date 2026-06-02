@@ -11,6 +11,7 @@ use App\Filament\Resources\Projects\Schemas\ProjectInfolist;
 use App\Filament\Resources\Projects\Tables\ProjectsTable;
 use App\Models\Project;
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -20,8 +21,8 @@ use UnitEnum;
 
 class ProjectResource extends Resource
 {
+  use HasPageShield;
   protected static ?string $model = Project::class;
-
   protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
   protected static ?string $navigationLabel = 'المشاريع';
   protected static ?string $pluralModelLabel = 'المشاريع';

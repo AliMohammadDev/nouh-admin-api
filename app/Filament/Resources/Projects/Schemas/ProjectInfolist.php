@@ -29,7 +29,6 @@ class ProjectInfolist
 
                 TextEntry::make('name.ar')
                   ->label('الاسم (عربي)')
-                  ->size(TextSize::Large)
                   ->weight(FontWeight::Bold)
                   ->color('primary')
                   ->size(TextSize::Large),
@@ -66,7 +65,8 @@ class ProjectInfolist
 
               ]),
 
-          ]),
+          ])->columnSpanFull(),
+
         Section::make('التاغات')
           ->icon('heroicon-o-tag')
           ->schema([
@@ -82,8 +82,7 @@ class ProjectInfolist
                   ->toArray();
               }),
 
-          ]),
-
+          ])->columnSpanFull(),
 
         Section::make('الروابط والمنصات')
           ->icon('heroicon-o-link')
@@ -93,7 +92,7 @@ class ProjectInfolist
               ->label('')
               ->schema([
 
-                Grid::make(2)
+                Grid::make(3)
                   ->schema([
 
                     SpatieMediaLibraryImageEntry::make('linkType.image')
@@ -120,7 +119,8 @@ class ProjectInfolist
 
               ]),
 
-          ]),
+          ])->columnSpanFull(),
+
         Section::make('معرض المشروع')
           ->icon('heroicon-o-photo')
           ->schema([
@@ -132,32 +132,33 @@ class ProjectInfolist
                   ->schema([
 
                     SpatieMediaLibraryImageEntry::make('images')
-                      ->label('')
                       ->collection('projects')
+                      ->hiddenLabel()
+                      ->size(120)
+                      ->stacked()
+                      ->limit(6)
+                      ->limitedRemainingText(),
 
-                      ->limit(8)
-                      ->hiddenLabel(),
-
-                  ]),
+                  ])->columnSpan(1),
 
                 Section::make('صور VR / Panorama')
                   ->schema([
 
                     SpatieMediaLibraryImageEntry::make('vr_images')
-                      ->label('')
                       ->collection('vr_images')
-                      ->limit(8)
-                      ->hiddenLabel(),
+                      ->hiddenLabel()
+                      ->size(120)
+                      ->stacked()
+                      ->limit(6)
+                      ->limitedRemainingText(),
 
                   ])
-                  ->visible(
-                    fn($record) =>
-                    $record->getMedia('vr_images')->count() > 0
-                  ),
+                  ->columnSpan(1)
+                  ->visible(fn($record) => $record->getMedia('vr_images')->count() > 0),
 
               ]),
 
-          ]),
+          ])->columnSpanFull(),
 
       ]);
   }

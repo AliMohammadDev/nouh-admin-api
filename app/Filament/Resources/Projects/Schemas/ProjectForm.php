@@ -37,8 +37,7 @@ class ProjectForm
 
                 TextInput::make('project_number')
                   ->label('رقم المشروع')
-                  ->required()
-                  ->unique(ignoreRecord: true),
+                  ->required(),
 
                 Toggle::make('is_featured')
                   ->label('مشروع مميز؟')

@@ -31,6 +31,10 @@ class CreateProjectRequest extends FormRequest
       'description.en' => ['required', 'string'],
       'description.ar' => ['required', 'string'],
 
+      'country' => ['required', 'array'],
+      'country.en' => ['required', 'string', 'max:255'],
+      'country.ar' => ['required', 'string', 'max:255'],
+
       'project_number' => ['required', 'string', 'unique:projects,project_number'],
       'category_id' => ['required', 'exists:categories,id'],
 

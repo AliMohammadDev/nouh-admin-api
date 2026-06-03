@@ -52,6 +52,13 @@ class ProjectsTable
           ->sortable()
           ->badge(),
 
+        TextColumn::make('country.ar')
+          ->label('الدولة')
+          ->icon('heroicon-m-globe-alt')
+          ->iconColor('gray')
+          ->sortable()
+          ->searchable(),
+
         ToggleColumn::make('is_featured')
           ->label('مميز')
           ->sortable()

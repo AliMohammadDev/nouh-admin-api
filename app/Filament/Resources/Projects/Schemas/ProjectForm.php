@@ -58,6 +58,18 @@ class ProjectForm
                   ->required(),
               ]),
 
+
+            Grid::make(2)
+              ->schema([
+                TextInput::make('country.ar')
+                  ->label('الدولة (بالعربية)')
+                  ->required(),
+
+                TextInput::make('country.en')
+                  ->label('Country (EN)')
+                  ->required(),
+              ]),
+
             Select::make('tags')
               ->label('الوسوم')
               ->relationship(

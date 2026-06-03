@@ -18,6 +18,7 @@ class ProjectResource extends JsonResource
       'id' => $this->id,
       'name' => $this->translated_name,
       'description' => $this->translated_description,
+      'country' => $this->translated_country,
       'project_number' => $this->project_number,
       'is_featured' => $this->is_featured,
       'image' => $this->getFirstMediaUrl('projects', 'default'),

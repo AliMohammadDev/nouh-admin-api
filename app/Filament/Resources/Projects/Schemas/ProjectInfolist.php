@@ -24,7 +24,7 @@ class ProjectInfolist
           ->icon('heroicon-o-information-circle')
           ->schema([
 
-            Grid::make(4)
+            Grid::make(5)
               ->schema([
 
                 TextEntry::make('name.ar')
@@ -38,6 +38,12 @@ class ProjectInfolist
                   ->size(TextSize::Large)
                   ->badge()
                   ->color('success'),
+
+                TextEntry::make('country.ar')
+                  ->label('الدولة')
+                  ->size(TextSize::Large)
+                  ->icon('heroicon-m-globe-alt')
+                  ->color('gray'),
 
                 TextEntry::make('project_number')
                   ->label('رقم المشروع')

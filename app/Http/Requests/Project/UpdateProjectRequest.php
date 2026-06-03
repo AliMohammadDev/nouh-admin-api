@@ -31,6 +31,10 @@ class UpdateProjectRequest extends FormRequest
       'description.en' => ['sometimes', 'string'],
       'description.ar' => ['sometimes', 'string'],
 
+      'country' => ['sometimes', 'array'],
+      'country.en' => ['sometimes_with:country', 'string', 'max:255'],
+      'country.ar' => ['sometimes_with:country', 'string', 'max:255'],
+
       'project_number' => ['sometimes', 'string', 'unique:projects,project_number,' . $this->route('project')],
       'category_id' => ['sometimes', 'exists:categories,id'],
 

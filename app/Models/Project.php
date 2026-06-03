@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Image\Enums\Fit;
 
-#[Fillable(['name', 'category_id', 'description', 'project_number', 'is_featured'])]
+#[Fillable(['name', 'category_id', 'description', 'project_number', 'is_featured', 'country'])]
 class Project extends Model implements HasMedia
 {
   use HasFactory, InteractsWithMedia;
@@ -24,6 +24,7 @@ class Project extends Model implements HasMedia
     'name' => 'array',
     'description' => 'array',
     'is_featured' => 'boolean',
+    'country' => 'array',
   ];
 
   protected static function booting(): void
@@ -61,6 +62,13 @@ class Project extends Model implements HasMedia
   {
     return $this->description[app()->getLocale()]
       ?? $this->description['en']
+      ?? '';
+  }
+
+  public function getTranslatedCountryAttribute(): string
+  {
+    return $this->country[app()->getLocale()]
+      ?? $this->country['en']
       ?? '';
   }
 

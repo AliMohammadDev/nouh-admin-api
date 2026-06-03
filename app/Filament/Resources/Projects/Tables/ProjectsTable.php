@@ -7,6 +7,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -41,6 +42,8 @@ class ProjectsTable
 
         TextColumn::make('project_number')
           ->label('رقم المشروع')
+          ->size(TextSize::Large)
+          ->sortable()
           ->searchable(),
 
 

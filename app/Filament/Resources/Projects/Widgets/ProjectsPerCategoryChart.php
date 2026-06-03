@@ -65,6 +65,6 @@ class ProjectsPerCategoryChart extends ChartWidget
 
   public static function canView(): bool
   {
-    return auth()->user()->can('view_any_projects::project');
+    return auth()->user()->hasRole('super_admin') || auth()->user()->can('view_any_project');
   }
 }

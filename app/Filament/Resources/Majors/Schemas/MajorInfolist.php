@@ -38,7 +38,6 @@ class MajorInfolist
                       ]),
 
                     Grid::make(1)
-                      // description
                       ->schema([
                         TextEntry::make('description.ar')
                           ->label('الوصف بالعربية')
@@ -53,7 +52,7 @@ class MajorInfolist
                       ]),
                   ]),
               ])->columnSpan(2),
-          ]),
+          ])->columnSpanFull(),
 
       ]);
   }

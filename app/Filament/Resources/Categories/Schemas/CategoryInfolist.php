@@ -53,7 +53,7 @@ class CategoryInfolist
                       ]),
                   ]),
               ])->columnSpan(2),
-          ]),
+          ])->columnSpanFull(),
 
       ]);
   }

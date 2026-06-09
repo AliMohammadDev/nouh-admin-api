@@ -40,6 +40,8 @@ class Project extends Model implements HasMedia
     $this->addMediaCollection('projects');
 
     $this->addMediaCollection('vr_images');
+
+    $this->addMediaCollection('real_photos');
   }
 
   public function registerMediaConversions(?Media $media = null): void

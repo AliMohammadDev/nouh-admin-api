@@ -23,6 +23,7 @@ class ProjectResource extends JsonResource
       'is_featured' => $this->is_featured,
       'image' => $this->getFirstMediaUrl('projects', 'default'),
       'image_vr' => $this->getFirstMediaUrl('vr_images', 'default'),
+      'image_real' => $this->getFirstMediaUrl('real_photos', 'default'),
 
       'all_images' => $this->when($request->routeIs('projects.show'), function () {
         return $this->getMedia('projects')->map(function ($media) {
@@ -32,6 +33,12 @@ class ProjectResource extends JsonResource
 
       'all_images_vr' => $this->when($request->routeIs('projects.show'), function () {
         return $this->getMedia('vr_images')->map(function ($media) {
+          return $media->getFullUrl();
+        })->toArray();
+      }),
+
+      'all_images_real' => $this->when($request->routeIs('projects.show'), function () {
+        return $this->getMedia('real_photos')->map(function ($media) {
           return $media->getFullUrl();
         })->toArray();
       }),

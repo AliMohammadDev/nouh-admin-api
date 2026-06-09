@@ -34,6 +34,13 @@ class ProjectsTable
           ->stacked()
           ->circular(),
 
+        SpatieMediaLibraryImageColumn::make('real_photos')
+          ->label('صور حقيقية')
+          ->collection('real_photos')
+          ->limit(4)
+          ->stacked()
+          ->circular(),
+
         TextColumn::make('name.ar')
           ->label('اسم المشروع')
           ->searchable()

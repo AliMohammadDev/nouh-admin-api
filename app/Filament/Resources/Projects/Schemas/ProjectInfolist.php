@@ -131,12 +131,11 @@ class ProjectInfolist
           ->icon('heroicon-o-photo')
           ->schema([
 
-            Grid::make(2)
+            Grid::make(3)
               ->schema([
 
                 Section::make('الصور العادية')
                   ->schema([
-
                     SpatieMediaLibraryImageEntry::make('images')
                       ->collection('projects')
                       ->hiddenLabel()
@@ -149,7 +148,6 @@ class ProjectInfolist
 
                 Section::make('صور VR / Panorama')
                   ->schema([
-
                     SpatieMediaLibraryImageEntry::make('vr_images')
                       ->collection('vr_images')
                       ->hiddenLabel()
@@ -161,6 +159,20 @@ class ProjectInfolist
                   ])
                   ->columnSpan(1)
                   ->visible(fn($record) => $record->getMedia('vr_images')->count() > 0),
+
+                Section::make('الصور الحقيقية (Real Photos)')
+                  ->schema([
+                    SpatieMediaLibraryImageEntry::make('real_photos')
+                      ->collection('real_photos')
+                      ->hiddenLabel()
+                      ->size(120)
+                      ->stacked()
+                      ->limit(6)
+                      ->limitedRemainingText(),
+                  ])
+                  ->columnSpan(1)
+                  ->visible(fn($record) => $record->getMedia('real_photos')->count() > 0),
+
 
               ]),
 

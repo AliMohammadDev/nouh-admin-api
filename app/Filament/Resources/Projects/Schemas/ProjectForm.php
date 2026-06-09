@@ -138,6 +138,17 @@ class ProjectForm
               ->reorderable()
               ->columnSpanFull()
               ->helperText('قم برفع صور 360 أو Panorama الخاصة بالمشروع'),
+
+
+            SpatieMediaLibraryFileUpload::make('real_photos')
+              ->label('الصور الحقيقية (Real Photos)')
+              ->collection('real_photos')
+              ->disk('public')
+              ->image()
+              ->multiple()
+              ->reorderable()
+              ->columnSpanFull()
+              ->helperText('قم برفع الصور الحقيقية للمشروع بعد التنفيذ'),
           ]),
       ])->columns(1);
   }

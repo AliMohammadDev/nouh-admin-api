@@ -121,7 +121,7 @@ class ProjectForm
         Section::make('معرض الصور')
           ->schema([
             SpatieMediaLibraryFileUpload::make('image')
-              ->label('صور المشروع')
+              ->label('صور التصميمية')
               ->collection('projects')
               ->disk('public')
               ->image()
@@ -141,14 +141,14 @@ class ProjectForm
 
 
             SpatieMediaLibraryFileUpload::make('real_photos')
-              ->label('الصور الحقيقية (Real Photos)')
+              ->label('الصور التنفيذية (Real Photos)')
               ->collection('real_photos')
               ->disk('public')
               ->image()
               ->multiple()
               ->reorderable()
               ->columnSpanFull()
-              ->helperText('قم برفع الصور الحقيقية للمشروع بعد التنفيذ'),
+              ->helperText('قم برفع الصور التنفيذية للمشروع بعد التنفيذ'),
           ]),
       ])->columns(1);
   }

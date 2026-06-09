@@ -134,7 +134,7 @@ class ProjectInfolist
             Grid::make(3)
               ->schema([
 
-                Section::make('الصور العادية')
+                Section::make('الصور التصميمية')
                   ->schema([
                     SpatieMediaLibraryImageEntry::make('images')
                       ->collection('projects')
@@ -160,7 +160,7 @@ class ProjectInfolist
                   ->columnSpan(1)
                   ->visible(fn($record) => $record->getMedia('vr_images')->count() > 0),
 
-                Section::make('الصور الحقيقية (Real Photos)')
+                Section::make('الصور التنفيذية (Real Photos)')
                   ->schema([
                     SpatieMediaLibraryImageEntry::make('real_photos')
                       ->collection('real_photos')

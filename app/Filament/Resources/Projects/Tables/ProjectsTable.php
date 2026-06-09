@@ -21,21 +21,21 @@ class ProjectsTable
     return $table
       ->columns([
         SpatieMediaLibraryImageColumn::make('projects')
-          ->label('الصور')
+          ->label('الصور التصميمية')
           ->collection('projects')
           ->limit(4)
           ->stacked()
           ->circular(),
 
         SpatieMediaLibraryImageColumn::make('vr_images')
-          ->label('VR')
+          ->label('صور VR / Panorama')
           ->collection('vr_images')
           ->limit(4)
           ->stacked()
           ->circular(),
 
         SpatieMediaLibraryImageColumn::make('real_photos')
-          ->label('صور حقيقية')
+          ->label('الصور التنفيذية')
           ->collection('real_photos')
           ->limit(4)
           ->stacked()

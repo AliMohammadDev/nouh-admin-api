@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Projects\Schemas;
 
+use Filament\Actions\Action;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -127,7 +128,17 @@ class ProjectForm
               ->image()
               ->multiple()
               ->reorderable()
-              ->columnSpanFull(),
+              ->columnSpanFull()
+              ->hintAction(
+                Action::make('clear_all_images')
+                  ->label('حذف جميع الصور')
+                  ->icon('heroicon-m-trash')
+                  ->color('danger')
+                  ->requiresConfirmation()
+                  ->action(function ($livewire, $component) {
+                    $component->state([]);
+                  })
+              ),
 
             SpatieMediaLibraryFileUpload::make('vr_images')
               ->label('صور VR / Panorama')
@@ -137,7 +148,18 @@ class ProjectForm
               ->multiple()
               ->reorderable()
               ->columnSpanFull()
-              ->helperText('قم برفع صور 360 أو Panorama الخاصة بالمشروع'),
+              ->imagePreviewHeight('200')
+              ->helperText('قم برفع صور 360 أو Panorama الخاصة بالمشروع')
+              ->hintAction(
+                Action::make('clear_all_images')
+                  ->label('حذف جميع الصور')
+                  ->icon('heroicon-m-trash')
+                  ->color('danger')
+                  ->requiresConfirmation()
+                  ->action(function ($livewire, $component) {
+                    $component->state([]);
+                  })
+              ),
 
 
             SpatieMediaLibraryFileUpload::make('real_photos')
@@ -148,7 +170,17 @@ class ProjectForm
               ->multiple()
               ->reorderable()
               ->columnSpanFull()
-              ->helperText('قم برفع الصور التنفيذية للمشروع بعد التنفيذ'),
+              ->helperText('قم برفع الصور التنفيذية للمشروع بعد التنفيذ')
+              ->hintAction(
+                Action::make('clear_all_images')
+                  ->label('حذف جميع الصور')
+                  ->icon('heroicon-m-trash')
+                  ->color('danger')
+                  ->requiresConfirmation()
+                  ->action(function ($livewire, $component) {
+                    $component->state([]);
+                  })
+              ),
           ]),
       ])->columns(1);
   }

@@ -90,4 +90,12 @@ class ProjectController extends Controller
 
     return ProjectResource::collection($relatedProjects);
   }
+  public function like(Project $project)
+  {
+    $project->increment('likes_count');
+
+    return response()->json([
+      'likes_count' => $project->likes_count
+    ]);
+  }
 }

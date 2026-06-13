@@ -59,6 +59,10 @@ class ProjectInfolist
                   ->trueColor('warning')
                   ->falseColor('gray'),
 
+                TextEntry::make('likes_count')
+                  ->label('عدد الاعجابات')
+                  ->size(TextSize::Large),
+
               ]),
 
             Grid::make(1)
@@ -101,7 +105,7 @@ class ProjectInfolist
                 Grid::make(3)
                   ->schema([
 
-                    SpatieMediaLibraryImageEntry::make('linkType.image')
+                    SpatieMediaLibraryImageEntry::make('linkType.media')
                       ->label('الأيقونة')
                       ->collection('link_types')
                       ->circular()
@@ -127,56 +131,39 @@ class ProjectInfolist
 
           ])->columnSpanFull(),
 
-        Section::make('معرض المشروع')
-          ->icon('heroicon-o-photo')
+        Section::make('الصور التصميمية')
           ->schema([
+            SpatieMediaLibraryImageEntry::make('media')
+              ->collection('design_images')
+              ->hiddenLabel()
+              ->size(120)
+              ->stacked()
+              ->limit(6),
+          ])->columnSpan(1),
 
-            Grid::make(3)
-              ->schema([
+        Section::make('صور VR / Panorama')
+          ->schema([
+            SpatieMediaLibraryImageEntry::make('media')
+              ->collection('vr_images')
+              ->hiddenLabel()
+              ->size(120)
+              ->stacked()
+              ->limit(6),
+          ])
+          ->columnSpan(1)
+          ->visible(fn($record) => $record->getMedia('vr_images')->count() > 0),
 
-                Section::make('الصور التصميمية')
-                  ->schema([
-                    SpatieMediaLibraryImageEntry::make('images')
-                      ->collection('projects')
-                      ->hiddenLabel()
-                      ->size(120)
-                      ->stacked()
-                      ->limit(6)
-                      ->limitedRemainingText(),
-
-                  ])->columnSpan(1),
-
-                Section::make('صور VR / Panorama')
-                  ->schema([
-                    SpatieMediaLibraryImageEntry::make('vr_images')
-                      ->collection('vr_images')
-                      ->hiddenLabel()
-                      ->size(120)
-                      ->stacked()
-                      ->limit(6)
-                      ->limitedRemainingText(),
-
-                  ])
-                  ->columnSpan(1)
-                  ->visible(fn($record) => $record->getMedia('vr_images')->count() > 0),
-
-                Section::make('الصور التنفيذية (Real Photos)')
-                  ->schema([
-                    SpatieMediaLibraryImageEntry::make('real_photos')
-                      ->collection('real_photos')
-                      ->hiddenLabel()
-                      ->size(120)
-                      ->stacked()
-                      ->limit(6)
-                      ->limitedRemainingText(),
-                  ])
-                  ->columnSpan(1)
-                  ->visible(fn($record) => $record->getMedia('real_photos')->count() > 0),
-
-
-              ]),
-
-          ])->columnSpanFull(),
+        Section::make('الصور التنفيذية (Real Photos)')
+          ->schema([
+            SpatieMediaLibraryImageEntry::make('media')
+              ->collection('real_images')
+              ->hiddenLabel()
+              ->size(120)
+              ->stacked()
+              ->limit(6),
+          ])
+          ->columnSpan(1)
+          ->visible(fn($record) => $record->getMedia('real_images')->count() > 0),
 
       ]);
   }

@@ -10,7 +10,7 @@ class ProjectService
 {
   public function findAll()
   {
-    return Project::with(['category', 'tags', 'linkTypes'])->get();
+    return Project::with(['category', 'tags', 'linkTypes', 'media'])->get();
   }
 
   public function createProject(array $data, $imageFile = null)
@@ -32,13 +32,13 @@ class ProjectService
         $project->addMedia($imageFile)->toMediaCollection('projects');
       }
 
-      return $project->load(['category', 'tags', 'linkTypes']);
+      return $project->load(['category', 'tags', 'linkTypes', 'media']);
     });
   }
 
   public function findOne(Project $project)
   {
-    return $project->load(['category', 'tags', 'linkTypes']);
+    return $project->load(['category', 'tags', 'linkTypes', 'media']);
   }
 
   public function updateProject(Project $project, array $data, $imageFile = null)
@@ -63,7 +63,7 @@ class ProjectService
         $project->addMedia($imageFile)->toMediaCollection('projects');
       }
 
-      return $project->fresh(['category', 'tags', 'linkTypes']);
+      return $project->fresh(['category', 'tags', 'linkTypes', 'media']);
     });
   }
 

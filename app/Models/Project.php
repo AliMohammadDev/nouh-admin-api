@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Image\Enums\Fit;
 
-#[Fillable(['name', 'category_id', 'description', 'project_number', 'is_featured', 'country'])]
+#[Fillable(['name', 'category_id', 'description', 'project_number', 'is_featured', 'country', 'likes_count'])]
 class Project extends Model implements HasMedia
 {
   use HasFactory, InteractsWithMedia;
@@ -39,9 +39,13 @@ class Project extends Model implements HasMedia
   {
     $this->addMediaCollection('projects');
 
-    $this->addMediaCollection('vr_images');
+    // $this->addMediaCollection('vr_images');
 
-    $this->addMediaCollection('real_photos');
+    // $this->addMediaCollection('real_photos');
+
+    $this->addMediaCollection('design_images');
+    $this->addMediaCollection('vr_images');
+    $this->addMediaCollection('real_images');
   }
 
   public function registerMediaConversions(?Media $media = null): void

@@ -20,23 +20,23 @@ class ProjectsTable
   {
     return $table
       ->columns([
-        SpatieMediaLibraryImageColumn::make('projects')
+        SpatieMediaLibraryImageColumn::make('media_design')
           ->label('الصور التصميمية')
-          ->collection('projects')
+          ->collection('design_images')
           ->limit(4)
           ->stacked()
           ->circular(),
 
-        SpatieMediaLibraryImageColumn::make('vr_images')
+        SpatieMediaLibraryImageColumn::make('media_vr')
           ->label('صور VR / Panorama')
           ->collection('vr_images')
           ->limit(4)
           ->stacked()
           ->circular(),
 
-        SpatieMediaLibraryImageColumn::make('real_photos')
+        SpatieMediaLibraryImageColumn::make('media_real') 
           ->label('الصور التنفيذية')
-          ->collection('real_photos')
+          ->collection('real_images')
           ->limit(4)
           ->stacked()
           ->circular(),
@@ -49,6 +49,12 @@ class ProjectsTable
 
         TextColumn::make('project_number')
           ->label('رقم المشروع')
+          ->size(TextSize::Large)
+          ->sortable()
+          ->searchable(),
+
+        TextColumn::make('likes_count')
+          ->label('عدد الاعجابات')
           ->size(TextSize::Large)
           ->sortable()
           ->searchable(),

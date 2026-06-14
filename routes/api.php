@@ -12,9 +12,12 @@ Route::middleware(['setLocale'])->group(function () {
   Route::apiResource('majors', MajorController::class);
   Route::apiResource('link-types', LinkTypeController::class);
   Route::apiResource('categories', CategoryController::class);
-  Route::get('projects/{project}/related', [ProjectController::class, 'related']);
+
   Route::get('projects/featured', [ProjectController::class, 'featured']);
+  Route::get('projects/top-liked', [ProjectController::class, 'topLiked']);
+  Route::get('projects/{project}/related', [ProjectController::class, 'related']);
   Route::post('/projects/{project}/like', [ProjectController::class, 'like']);
+
   Route::apiResource('projects', ProjectController::class);
   Route::apiResource('tags', TagController::class);
 });

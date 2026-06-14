@@ -91,6 +91,12 @@ class ProjectController extends Controller
     return ProjectResource::collection($featuredProjects);
   }
 
+  public function topLiked()
+  {
+    $topProjects = $this->projectService->findTopLiked(6); 
+    return ProjectResource::collection($topProjects);
+  }
+
   public function like(Project $project)
   {
     $project->increment('likes_count');

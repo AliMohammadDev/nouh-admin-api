@@ -11,15 +11,21 @@ class ProjectResource extends JsonResource
   {
     $locale = app()->getLocale();
     $galleries = $this->relationLoaded('galleries') ? $this->galleries : collect();
-    $isRelatedRoute = $request->routeIs('*related*') || $request->is('*related*') || $request->routeIs('*featured*') || $request->is('*featured*');
-    $isSummaryMode = $galleries->isNotEmpty() && !$galleries->first()->relationLoaded('media');
 
+    $isRelatedRoute = $request->routeIs('*related*') ||
+      $request->is('*related*') ||
+      $request->routeIs('*featured*') ||
+      $request->is('*featured*') ||
+      $request->routeIs('*top-liked*') ||
+      $request->is('*top-liked*');
+
+    $isSummaryMode = $galleries->isNotEmpty() && !$galleries->first()->relationLoaded('media');
 
     return [
       'id' => $this->id,
       'name' => $this->translated_name,
       'description' => $this->translated_description,
-      'likes_count' => $this->likes_count,
+      'likes_count' => $this->likes_count,  
       'country' => $this->translated_country,
       'project_number' => $this->project_number,
       'is_featured' => $this->is_featured,

@@ -39,6 +39,17 @@ class ProjectService
       ->get();
   }
 
+  public function findTopLiked($limit = 6)
+  {
+    return Project::with([
+      'category',
+      'galleries.media'
+    ])
+      ->orderBy('likes_count', 'desc')
+      ->take($limit)
+      ->get();
+  }
+
   public function createProject(array $data, $imageFile = null)
   {
     return DB::transaction(function () use ($data, $imageFile) {

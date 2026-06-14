@@ -14,10 +14,29 @@ class ProjectService
       'category',
       'tags',
       'linkTypes',
-      'galleries' => function ($query) {
-        $query->select('id', 'project_id', 'name');
-      }
+      'galleries.media'
     ])->get();
+  }
+
+  public function findFeatured()
+  {
+    return Project::where('is_featured', true)
+      ->with([
+        'category',
+        'galleries.media'
+      ])
+      ->latest()
+      ->get();
+  }
+
+  public function findRelated($project)
+  {
+    return Project::where('category_id', $project->category_id)
+      ->where('id', '!=', $project->id)
+      ->with(['category', 'galleries.media'])
+      ->latest()
+      ->take(4)
+      ->get();
   }
 
   public function createProject(array $data, $imageFile = null)

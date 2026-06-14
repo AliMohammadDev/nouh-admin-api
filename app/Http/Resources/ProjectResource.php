@@ -11,8 +11,7 @@ class ProjectResource extends JsonResource
   {
     $locale = app()->getLocale();
     $galleries = $this->relationLoaded('galleries') ? $this->galleries : collect();
-    $isRelatedRoute = $request->routeIs('*related*') || $request->is('*related*');
-
+    $isRelatedRoute = $request->routeIs('*related*') || $request->is('*related*') || $request->routeIs('*featured*') || $request->is('*featured*');
     $isSummaryMode = $galleries->isNotEmpty() && !$galleries->first()->relationLoaded('media');
 
 

@@ -80,21 +80,17 @@ class ProjectController extends Controller
 
   public function related(Project $project)
   {
-    $relatedProjects = Project::where('category_id', $project->category_id)
-      ->where('id', '!=', $project->id)
-      ->latest()
-      ->take(4)
-      ->get();
 
-    $relatedProjects->load([
-      'galleries' => function ($query) {
-        $query->take(1);
-      },
-      'galleries.media'
-    ]);
-
+    $relatedProjects = $this->projectService->findRelated($project);
     return ProjectResource::collection($relatedProjects);
   }
+
+  public function featured()
+  {
+    $featuredProjects = $this->projectService->findFeatured();
+    return ProjectResource::collection($featuredProjects);
+  }
+
   public function like(Project $project)
   {
     $project->increment('likes_count');

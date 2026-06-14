@@ -25,12 +25,12 @@ class ProjectResource extends JsonResource
       'id' => $this->id,
       'name' => $this->translated_name,
       'description' => $this->translated_description,
-      'likes_count' => $this->likes_count,  
+      'likes_count' => $this->likes_count,
       'country' => $this->translated_country,
       'project_number' => $this->project_number,
       'is_featured' => $this->is_featured,
 
-      'main_image' => $galleries->flatMap(fn($g) => $g->getMedia('photos'))->first()?->getFullUrl() ?: '',
+      'main_image' => $this->galleries->flatMap(fn($g) => $g->getMedia('photos'))->first()?->getFullUrl('thumb') ?: '',
       $this->mergeWhen($isSummaryMode, [
         'gallery_names' => $galleries->map(function ($gallery) use ($locale) {
           return $gallery->name[$locale] ?? $gallery->name['en'] ?? '';

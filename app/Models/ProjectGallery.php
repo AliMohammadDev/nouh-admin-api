@@ -8,6 +8,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 #[Fillable(['project_section_id', 'project_id', 'name'])]
@@ -43,12 +44,21 @@ class ProjectGallery extends Model implements HasMedia
     $this->addMediaCollection('photos');
   }
 
-  public function registerMediaConversions(Media $media = null): void
+  // public function registerMediaConversions(Media $media = null): void
+  // {
+  //   $this->addMediaConversion('thumb')
+  //     ->width(360)
+  //     ->height(270)
+  //     ->sharpen(10)
+  //     ->nonQueued();
+  // }
+
+  public function registerMediaConversions(?Media $media = null): void
   {
-    $this->addMediaConversion('thumb')
-      ->width(360)
-      ->height(270)
-      ->sharpen(10)
+    $this->addMediaConversion('default')
+      ->fit(Fit::Max, 1000, 1000)
+      ->quality(70)
+      ->format('webp')
       ->nonQueued();
   }
 }

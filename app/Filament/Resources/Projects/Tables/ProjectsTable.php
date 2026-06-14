@@ -24,13 +24,12 @@ class ProjectsTable
         ImageColumn::make('project_images')
           ->label('معاينة الصور')
           ->state(function ($record) {
-            // نقوم بجلب كل الألبومات التابعة للمشروع مع الصور الخاصة بها
             return $record->galleries->flatMap(function ($gallery) {
-              return $gallery->getMedia('photos')->map(fn($media) => $media->getUrl('thumb'));
-            })->take(3)->toArray(); // نأخذ أول 3 صور فقط ونحولها لمصفوفة روابط
+              return $gallery->getMedia('photos')->map(fn($media) => $media->getUrl('default'));
+            })->take(3)->toArray();
           })
           ->limit(3)
-          ->stacked() // لعرض الصور فوق بعضها بشكل أنيق
+          ->stacked()
           ->circular(),
 
         TextColumn::make('name.ar')

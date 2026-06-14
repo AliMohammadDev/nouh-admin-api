@@ -30,7 +30,8 @@ class ProjectResource extends JsonResource
       'project_number' => $this->project_number,
       'is_featured' => $this->is_featured,
 
-      'main_image' => $this->galleries->flatMap(fn($g) => $g->getMedia('photos'))->first()?->getFullUrl('thumb') ?: '',
+      'main_image' => $this->galleries->flatMap(fn($g) => $g->getMedia('photos'))->first()?->getFullUrl('default') ?: '',
+
       $this->mergeWhen($isSummaryMode, [
         'gallery_names' => $galleries->map(function ($gallery) use ($locale) {
           return $gallery->name[$locale] ?? $gallery->name['en'] ?? '';

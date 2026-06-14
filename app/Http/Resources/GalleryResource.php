@@ -21,7 +21,7 @@ class GalleryResource extends JsonResource
       'album_name' => $this->name[$locale] ?? $this->name['en'] ?? '',
       'images' => $this->getMedia('photos')->map(fn($media) => [
         'original' => $media->getFullUrl(),
-        'thumbnail' => $media->getFullUrl('thumb'),
+        'thumbnail' => $media->getFullUrl('default'),
       ])->values()->toArray(),
     ];
   }

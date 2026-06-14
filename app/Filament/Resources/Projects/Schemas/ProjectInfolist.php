@@ -10,7 +10,6 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\TextSize;
-use Filament\Tables\Grouping\Group;
 use Filament\Infolists\Components\IconEntry;
 
 class ProjectInfolist
@@ -131,39 +130,44 @@ class ProjectInfolist
 
           ])->columnSpanFull(),
 
-        Section::make('الصور التصميمية')
+        Section::make('معرض ألبومات الصور للمشروع')
+          ->icon('heroicon-o-photo')
           ->schema([
-            SpatieMediaLibraryImageEntry::make('media')
-              ->collection('design_images')
-              ->hiddenLabel()
-              ->size(120)
-              ->stacked()
-              ->limit(6),
-          ])->columnSpan(1),
 
-        Section::make('صور VR / Panorama')
-          ->schema([
-            SpatieMediaLibraryImageEntry::make('media')
-              ->collection('vr_images')
-              ->hiddenLabel()
-              ->size(120)
-              ->stacked()
-              ->limit(6),
-          ])
-          ->columnSpan(1)
-          ->visible(fn($record) => $record->getMedia('vr_images')->count() > 0),
+            RepeatableEntry::make('galleries')
+              ->label('')
+              ->schema([
 
-        Section::make('الصور التنفيذية (Real Photos)')
-          ->schema([
-            SpatieMediaLibraryImageEntry::make('media')
-              ->collection('real_images')
-              ->hiddenLabel()
-              ->size(120)
-              ->stacked()
-              ->limit(6),
-          ])
-          ->columnSpan(1)
-          ->visible(fn($record) => $record->getMedia('real_images')->count() > 0),
+                Grid::make(2)
+                  ->schema([
+                    TextEntry::make('section.name')
+                      ->label('قسم الألبوم')
+                      ->badge()
+                      ->color('info')
+                      ->getStateUsing(fn($record) => $record->section->name[app()->getLocale()] ?? $record->section->name['en'] ?? ''),
+
+                    TextEntry::make('name')
+                      ->label('اسم الألبوم')
+                      ->weight(FontWeight::Bold)
+                      ->getStateUsing(fn($record) => $record->name[app()->getLocale()] ?? $record->name['en'] ?? ''),
+                  ]),
+
+                Grid::make([
+                  'default' => 2,
+                  'sm' => 3,
+                  'md' => 4,
+                  'lg' => 6,
+                ])
+                  ->schema([
+                    SpatieMediaLibraryImageEntry::make('photos')
+                      ->hiddenLabel()
+                      ->collection('photos')
+                      ->size(120)
+                      ->columnSpanFull(),
+                  ]),
+              ])
+
+          ])->columnSpanFull(),
 
       ]);
   }

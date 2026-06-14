@@ -10,10 +10,11 @@ class ProjectResource extends JsonResource
   public function toArray(Request $request): array
   {
     $locale = app()->getLocale();
-    $mediaCollection = $this->media;
+    $galleries = $this->relationLoaded('galleries') ? $this->galleries : collect();
+    $isRelatedRoute = $request->routeIs('*related*') || $request->is('*related*');
 
-    $sectionProperty = $locale === 'ar' ? 'section_ar' : 'section_en';
-    $fallbackProperty = $locale === 'ar' ? 'section_en' : 'section_ar';
+    $isSummaryMode = $galleries->isNotEmpty() && !$galleries->first()->relationLoaded('media');
+
 
     return [
       'id' => $this->id,
@@ -24,33 +25,25 @@ class ProjectResource extends JsonResource
       'project_number' => $this->project_number,
       'is_featured' => $this->is_featured,
 
-      'image' => $this->getFirstMediaUrl('projects', 'default')
-        ?: $this->getFirstMediaUrl('projects')
-        ?: $mediaCollection->where('collection_name', 'design_images')->first()?->getFullUrl()
-        ?: '',
+      'main_image' => $galleries->flatMap(fn($g) => $g->getMedia('photos'))->first()?->getFullUrl() ?: '',
+      $this->mergeWhen($isSummaryMode, [
+        'gallery_names' => $galleries->map(function ($gallery) use ($locale) {
+          return $gallery->name[$locale] ?? $gallery->name['en'] ?? '';
+        })->values()->toArray(),
+      ]),
 
-      'design_images' => $mediaCollection->where('collection_name', 'design_images')
-        ->groupBy(fn($m) => $m->getCustomProperty($sectionProperty) ?? $m->getCustomProperty($fallbackProperty) ?? ($locale === 'ar' ? 'عام' : 'general'))
-        ->map(
-          fn($items) => $items->map(fn($m) => $m->getFullUrl())->values()->toArray()
-        )
-        ->toArray(),
+      $this->mergeWhen(!$isRelatedRoute, [
+        'design_galleries' => GalleryResource::collection($galleries->where('project_section_id', 1)),
+        'vr_galleries' => GalleryResource::collection($galleries->where('project_section_id', 2)),
+        'real_galleries' => GalleryResource::collection($galleries->where('project_section_id', 3)),
+        'links' => $this->linkTypes->map(fn($link) => [
+          'id' => $link->id,
+          'name' => $link->name[$locale] ?? $link->name['en'] ?? '',
+          'url' => $link->pivot->url,
+        ]),
+      ]),
 
-      'vr_images' => $mediaCollection->where('collection_name', 'vr_images')
-        ->groupBy(fn($m) => $m->getCustomProperty($sectionProperty) ?? $m->getCustomProperty($fallbackProperty) ?? ($locale === 'ar' ? 'عام' : 'general'))
-        ->map(
-          fn($items) => $items->map(fn($m) => $m->getFullUrl())->values()->toArray()
-        )
-        ->toArray(),
-
-      'real_images' => $mediaCollection->where('collection_name', 'real_images')
-        ->groupBy(fn($m) => $m->getCustomProperty($sectionProperty) ?? $m->getCustomProperty($fallbackProperty) ?? ($locale === 'ar' ? 'عام' : 'general'))
-        ->map(
-          fn($items) => $items->map(fn($m) => $m->getFullUrl())->values()->toArray()
-        )
-        ->toArray(),
-
-      'category' => new CategoryResource($this->whenLoaded('category')),
+      'categories' => new CategoryResource($this->whenLoaded('category')),
       'tags' => TagResource::collection($this->whenLoaded('tags')),
 
       'links' => $this->linkTypes->map(fn($link) => [

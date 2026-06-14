@@ -10,7 +10,14 @@ class ProjectService
 {
   public function findAll()
   {
-    return Project::with(['category', 'tags', 'linkTypes', 'media'])->get();
+    return Project::with([
+      'category',
+      'tags',
+      'linkTypes',
+      'galleries' => function ($query) {
+        $query->select('id', 'project_id', 'name');
+      }
+    ])->get();
   }
 
   public function createProject(array $data, $imageFile = null)
@@ -28,17 +35,15 @@ class ProjectService
         }
       }
 
-      if ($imageFile) {
-        $project->addMedia($imageFile)->toMediaCollection('projects');
-      }
 
-      return $project->load(['category', 'tags', 'linkTypes', 'media']);
+
+      return $project->load(['category', 'tags', 'linkTypes', 'galleries.section', 'galleries.media']);
     });
   }
 
   public function findOne(Project $project)
   {
-    return $project->load(['category', 'tags', 'linkTypes', 'media']);
+    return $project->load(['category', 'tags', 'linkTypes', 'galleries.section', 'galleries.media']);
   }
 
   public function updateProject(Project $project, array $data, $imageFile = null)
@@ -58,12 +63,9 @@ class ProjectService
         $project->linkTypes()->sync($formattedLinks);
       }
 
-      if ($imageFile) {
-        $project->clearMediaCollection('projects');
-        $project->addMedia($imageFile)->toMediaCollection('projects');
-      }
 
-      return $project->fresh(['category', 'tags', 'linkTypes', 'media']);
+
+      return $project->load(['category', 'tags', 'linkTypes', 'galleries.section', 'galleries.media']);
     });
   }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Project;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,8 +12,12 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::table('projects', function (Blueprint $table) {
-      $table->unsignedInteger('likes_count')->default(0)->after('description');
+    Schema::create('project_sections', function (Blueprint $table) {
+      $table->id();
+      $table->json('name');
+      $table->string('type')->unique();
+
+      $table->timestamps();
     });
   }
 
@@ -21,8 +26,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::table('projects', function (Blueprint $table) {
-      $table->dropColumn('likes_count');
-    });
+    Schema::dropIfExists('project_sections');
   }
 };

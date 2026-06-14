@@ -8,6 +8,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\TextSize;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -20,25 +21,16 @@ class ProjectsTable
   {
     return $table
       ->columns([
-        SpatieMediaLibraryImageColumn::make('media_design')
-          ->label('الصور التصميمية')
-          ->collection('design_images')
-          ->limit(4)
-          ->stacked()
-          ->circular(),
-
-        SpatieMediaLibraryImageColumn::make('media_vr')
-          ->label('صور VR / Panorama')
-          ->collection('vr_images')
-          ->limit(4)
-          ->stacked()
-          ->circular(),
-
-        SpatieMediaLibraryImageColumn::make('media_real') 
-          ->label('الصور التنفيذية')
-          ->collection('real_images')
-          ->limit(4)
-          ->stacked()
+        ImageColumn::make('project_images')
+          ->label('معاينة الصور')
+          ->state(function ($record) {
+            // نقوم بجلب كل الألبومات التابعة للمشروع مع الصور الخاصة بها
+            return $record->galleries->flatMap(function ($gallery) {
+              return $gallery->getMedia('photos')->map(fn($media) => $media->getUrl('thumb'));
+            })->take(3)->toArray(); // نأخذ أول 3 صور فقط ونحولها لمصفوفة روابط
+          })
+          ->limit(3)
+          ->stacked() // لعرض الصور فوق بعضها بشكل أنيق
           ->circular(),
 
         TextColumn::make('name.ar')

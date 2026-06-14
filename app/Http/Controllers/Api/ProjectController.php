@@ -29,7 +29,6 @@ class ProjectController extends Controller
   {
     $project = $this->projectService->createProject(
       $request->validated(),
-      $request->file('image')
     );
     return new ProjectResource($project);
   }
@@ -44,7 +43,6 @@ class ProjectController extends Controller
     $updatedProject = $this->projectService->updateProject(
       $project,
       $request->validated(),
-      $request->file('image')
     );
     return new ProjectResource($updatedProject);
   }
@@ -87,6 +85,13 @@ class ProjectController extends Controller
       ->latest()
       ->take(4)
       ->get();
+
+    $relatedProjects->load([
+      'galleries' => function ($query) {
+        $query->take(1);
+      },
+      'galleries.media'
+    ]);
 
     return ProjectResource::collection($relatedProjects);
   }

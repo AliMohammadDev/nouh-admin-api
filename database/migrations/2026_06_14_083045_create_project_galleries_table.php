@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Category;
+use App\Models\Project;
+use App\Models\ProjectSection;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,15 +13,15 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('projects', function (Blueprint $table) {
+    Schema::create('project_galleries', function (Blueprint $table) {
       $table->id();
-      $table->foreignIdFor(Category::class)->constrained();
+      $table->foreignIdFor(Project::class)
+        ->constrained()
+        ->cascadeOnDelete();
+      $table->foreignIdFor(ProjectSection::class)
+        ->constrained()
+        ->cascadeOnDelete();
       $table->json('name');
-      $table->json('description');
-      $table->string('project_number');
-      $table->json('country')->nullable();
-      $table->unsignedInteger('likes_count')->default(0);
-      $table->boolean('is_featured')->default(false);
       $table->timestamps();
     });
   }
@@ -30,6 +31,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists('projects');
+    Schema::dropIfExists('project_galleries');
   }
 };

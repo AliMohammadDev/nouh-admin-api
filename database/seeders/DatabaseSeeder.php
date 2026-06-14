@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
 
       TagSeeder::class,
       LinkTypeSeeder::class,
+
+      ProjectSectionSeeder::class
     ]);
   }
 }

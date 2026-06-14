@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Projects\Schemas;
 
+use App\Models\ProjectSection;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
@@ -12,6 +12,10 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
+
 
 class ProjectForm
 {
@@ -124,113 +128,169 @@ class ProjectForm
 
 
 
-        Tabs::make('معرض الصور')
-          ->columnSpanFull()
+        // معرض الصور
+
+        // Section::make('معرض الصور والألبومات')
+        //   ->description('يمكنك إضافة عدة ألبومات وتوزيعها حسب أقسام المشروع (تصميم، تنفيذ، VR)')
+        //   ->schema([
+        //     Repeater::make('galleries')
+        //       ->relationship('galleries') // يربط التكرار بعلاقة الألبومات في المشروع
+        //       ->label('الألبومات')
+        //       ->schema([
+        //         Grid::make(3)
+        //           ->schema([
+        //             Select::make('project_section_id')
+        //               ->label('قسم الصور')
+        //               ->options(fn() => \App\Models\ProjectSection::all()->pluck('name', 'id')->map(fn($name) => $name[app()->getLocale()] ?? $name['en'] ?? ''))
+        //               ->required()
+        //               ->preload(),
+
+        //             TextInput::make('name.ar')
+        //               ->label('اسم الألبوم (بالعربية)')
+        //               ->placeholder('مثال: غرف النوم')
+        //               ->required(),
+
+        //             TextInput::make('name.en')
+        //               ->label('Album Name (EN)')
+        //               ->placeholder('e.g., Bedrooms')
+        //               ->required(),
+        //           ]),
+
+        //         // حقل رفع الصور المتعددة التابع لـ Spatie Media Library داخل الألبوم
+        //         SpatieMediaLibraryFileUpload::make('photos')
+        //           ->label('صور الألبوم')
+        //           ->collection('photos') // هامة جداً ليرتبط بالموديل الصحيح داخل الريبيتر
+        //           ->multiple()
+        //           ->required(),
+        //       ])
+        //       ->createItemButtonLabel('إضافة ألبوم جديد')
+        //       ->columns(1)
+        //       ->grid(1) // لجعل كل ألبوم يظهر كبطاقة منفصلة مريحة للعين
+        //   ]),
+
+
+
+        Tabs::make('معرض ألبومات الصور للمشروع')
           ->tabs([
-
-            Tabs\Tab::make('الصور التصميمية')
-              ->icon('heroicon-m-paint-brush')
+            Tabs\Tab::make('تصميم')
+              ->icon('heroicon-o-pencil-square')
               ->schema([
-                Repeater::make('design_sub_collections')
-                  ->label('أقسام التصميم')
+                Repeater::make('design_galleries')
+                  ->relationship(
+                    name: 'galleries',
+                    modifyQueryUsing: fn($query) => $query->where('project_section_id', 1)
+                  )
+                  ->label('ألبومات التصميم')
                   ->schema([
-                    Grid::make(2)->schema([
-                      TextInput::make('sub_collection_ar')
-                        ->label('اسم القسم (عربي)')
-                        ->required(),
+                    Grid::make(2)
+                      ->schema([
+                        TextInput::make('name.ar')
+                          ->label('اسم الألبوم (بالعربية)')
+                          ->placeholder('مثال: غرف النوم')
+                          ->required(),
 
-                      TextInput::make('sub_collection_en')
-                        ->label('Name (EN)')
-                        ->required(),
-                    ]),
-
-                    SpatieMediaLibraryFileUpload::make('images')
-                      ->label('صور القسم')
-                      ->collection('design_images')
-                      ->multiple()
-                      ->reorderable()
-                      ->image()
-                      ->dehydrated(false)
-                      ->filterMediaUsing(function ($component, $get) {
-                        return $component->getRecord()?->getMedia('design_images')
-                          ->filter(fn($media) => $media->getCustomProperty('section_ar') === $get('sub_collection_ar'));
-                      })
-                      ->customProperties(fn($get) => [
-                        'section_ar' => $get('sub_collection_ar'),
-                        'section_en' => $get('sub_collection_en'),
+                        TextInput::make('name.en')
+                          ->label('Album Name (EN)')
+                          ->placeholder('e.g., Bedrooms')
+                          ->required(),
                       ]),
+
+                    SpatieMediaLibraryFileUpload::make('photos')
+                      ->label('صور الألبوم')
+                      ->collection('photos')
+                      ->multiple()
+                      ->required(),
                   ])
+                  ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                    $data['project_section_id'] = 1;
+                    return $data;
+                  })
+                  ->createItemButtonLabel('إضافة ألبوم تصميم جديد')
+                  ->grid(1)
               ]),
 
-            Tabs\Tab::make('صور VR')
-              ->icon('heroicon-m-cube')
+            // ----------------------------------------------------
+            // 2. تبويب صور VR / 360
+            // ----------------------------------------------------
+            Tabs\Tab::make('صور 360 VR')
+              ->icon('heroicon-o-eye')
               ->schema([
-                Repeater::make('vr_sub_collections')
-                  ->label('أقسام VR')
+                Repeater::make('vr_galleries')
+                  ->relationship(
+                    name: 'galleries',
+                    modifyQueryUsing: fn($query) => $query->where('project_section_id', 2)
+                  )
+                  ->label('ألبومات 360 VR')
                   ->schema([
-                    Grid::make(2)->schema([
-                      TextInput::make('sub_collection_ar')
-                        ->label('اسم القسم (عربي)')
-                        ->required(),
+                    Grid::make(2)
+                      ->schema([
+                        TextInput::make('name.ar')
+                          ->label('اسم الألبوم (بالعربية)')
+                          ->placeholder('مثال: صالون VR')
+                          ->required(),
 
-                      TextInput::make('sub_collection_en')
-                        ->label('Name (EN)')
-                        ->required(),
-                    ]),
-
-                    SpatieMediaLibraryFileUpload::make('images')
-                      ->label('صور VR')
-                      ->collection('vr_images')
-                      ->multiple()
-                      ->reorderable()
-                      ->image()
-                      ->dehydrated(false)
-                      ->filterMediaUsing(function ($component, $get) {
-                        return $component->getRecord()?->getMedia('vr_images')
-                          ->filter(fn($media) => $media->getCustomProperty('section_ar') === $get('sub_collection_ar'));
-                      })
-                      ->customProperties(fn($get) => [
-                        'section_ar' => $get('sub_collection_ar'),
-                        'section_en' => $get('sub_collection_en'),
+                        TextInput::make('name.en')
+                          ->label('Album Name (EN)')
+                          ->placeholder('e.g., Living Room VR')
+                          ->required(),
                       ]),
+
+                    SpatieMediaLibraryFileUpload::make('photos')
+                      ->label('صور الألبوم')
+                      ->collection('photos')
+                      ->multiple()
+                      ->required(),
                   ])
+                  ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                    $data['project_section_id'] = 2;
+                    return $data;
+                  })
+                  ->createItemButtonLabel('إضافة ألبوم VR جديد')
+                  ->grid(1)
               ]),
 
-            Tabs\Tab::make('الصور التنفيذية')
-              ->icon('heroicon-m-camera')
+            // ----------------------------------------------------
+            // 3. تبويب صور التنفيذ
+            // ----------------------------------------------------
+            Tabs\Tab::make('التنفيذ الواقعي')
+              ->icon('heroicon-o-briefcase')
               ->schema([
-                Repeater::make('real_sub_collections')
-                  ->label('أقسام التنفيذ')
+                Repeater::make('execution_galleries')
+                  ->relationship(
+                    name: 'galleries',
+                    modifyQueryUsing: fn($query) => $query->where('project_section_id', 3)
+                  )
+                  ->label('ألبومات التنفيذ على أرض الواقع')
                   ->schema([
-                    Grid::make(2)->schema([
-                      TextInput::make('sub_collection_ar')
-                        ->label('اسم القسم (عربي)')
-                        ->required(),
+                    Grid::make(2)
+                      ->schema([
+                        TextInput::make('name.ar')
+                          ->label('اسم الألبوم (بالعربية)')
+                          ->placeholder('مثال: الصور النهائية بعد الفرش')
+                          ->required(),
 
-                      TextInput::make('sub_collection_en')
-                        ->label('Name (EN)')
-                        ->required(),
-                    ]),
-
-                    SpatieMediaLibraryFileUpload::make('images')
-                      ->label('صور التنفيذ')
-                      ->collection('real_images')
-                      ->multiple()
-                      ->reorderable()
-                      ->image()
-                      ->dehydrated(false)
-                      ->filterMediaUsing(function ($component, $get) {
-                        return $component->getRecord()?->getMedia('real_images')
-                          ->filter(fn($media) => $media->getCustomProperty('section_ar') === $get('sub_collection_ar'));
-                      })
-                      ->customProperties(fn($get) => [
-                        'section_ar' => $get('sub_collection_ar'),
-                        'section_en' => $get('sub_collection_en'),
+                        TextInput::make('name.en')
+                          ->label('Album Name (EN)')
+                          ->placeholder('e.g., Final Execution')
+                          ->required(),
                       ]),
+
+                    SpatieMediaLibraryFileUpload::make('photos')
+                      ->label('صور الألبوم')
+                      ->collection('photos')
+                      ->multiple()
+                      ->required(),
                   ])
+                  ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                    $data['project_section_id'] = 3;
+                    return $data;
+                  })
+                  ->createItemButtonLabel('إضافة ألبوم تنفيذ جديد')
+                  ->grid(1)
               ]),
 
-          ]),
+          ])->columnSpanFull(),
+
 
       ])->columns(1);
   }

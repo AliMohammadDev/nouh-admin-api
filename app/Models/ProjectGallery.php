@@ -44,14 +44,7 @@ class ProjectGallery extends Model implements HasMedia
     $this->addMediaCollection('photos');
   }
 
-  // public function registerMediaConversions(Media $media = null): void
-  // {
-  //   $this->addMediaConversion('thumb')
-  //     ->width(360)
-  //     ->height(270)
-  //     ->sharpen(10)
-  //     ->nonQueued();
-  // }
+
 
   public function registerMediaConversions(?Media $media = null): void
   {

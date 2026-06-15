@@ -17,11 +17,15 @@ class ProjectSectionsTable
   {
     return $table
       ->columns([
-        TextColumn::make('translated_name')
-          ->label('اسم القسم')
+        TextColumn::make('name.ar')
           ->size(TextSize::Large)
-
-          ->searchable(),
+          ->searchable()
+          ->sortable(),
+        TextColumn::make('name.en')
+          ->label('Name (EN)')
+          ->size(TextSize::Large)
+          ->searchable()
+          ->sortable(),
 
         BadgeColumn::make('type')
           ->label('نوع القسم')

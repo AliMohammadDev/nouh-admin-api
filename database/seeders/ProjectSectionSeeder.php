@@ -35,6 +35,13 @@ class ProjectSectionSeeder extends Seeder
           'en' => 'Execution Images',
         ]),
       ],
+      [
+        'type' => 'drawings',
+        'name' => json_encode([
+          'ar' => 'صور المخططات',
+          'en' => 'Drawings Images',
+        ]),
+      ],
     ]);
   }
 }

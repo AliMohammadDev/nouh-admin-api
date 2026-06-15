@@ -209,9 +209,7 @@ class ProjectForm
                   ->grid(1)
               ]),
 
-            // ----------------------------------------------------
-            // 2. تبويب صور VR / 360
-            // ----------------------------------------------------
+
             Tabs\Tab::make('صور 360 VR')
               ->icon('heroicon-o-eye')
               ->schema([
@@ -249,9 +247,7 @@ class ProjectForm
                   ->grid(1)
               ]),
 
-            // ----------------------------------------------------
-            // 3. تبويب صور التنفيذ
-            // ----------------------------------------------------
+
             Tabs\Tab::make('التنفيذ الواقعي')
               ->icon('heroicon-o-briefcase')
               ->schema([
@@ -288,6 +284,49 @@ class ProjectForm
                   ->createItemButtonLabel('إضافة ألبوم تنفيذ جديد')
                   ->grid(1)
               ]),
+
+
+
+
+            Tabs\Tab::make('المخططات')
+              ->icon('heroicon-o-map')
+              ->schema([
+                Repeater::make('drawings_galleries')
+                  ->relationship(
+                    name: 'galleries',
+                    modifyQueryUsing: fn($query) => $query->where('project_section_id', 4)
+                  )
+                  ->label('ألبومات المخططات والرسومات الفنية')
+                  ->schema([
+                    Grid::make(2)
+                      ->schema([
+                        TextInput::make('name.ar')
+                          ->label('اسم الألبوم (بالعربية)')
+                          ->placeholder('مثال: المخططات التنفيذية والكهربائية')
+                          ->required(),
+
+                        TextInput::make('name.en')
+                          ->label('Album Name (EN)')
+                          ->placeholder('e.g., Blueprint Plans')
+                          ->required(),
+                      ]),
+
+                    SpatieMediaLibraryFileUpload::make('photos')
+                      ->label('صور المخططات والملفات')
+                      ->collection('photos')
+                      ->multiple()
+                      ->required(),
+                  ])
+                  ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                    $data['project_section_id'] = 4;
+                    return $data;
+                  })
+                  ->createItemButtonLabel('إضافة ألبوم مخططات جديد')
+                  ->grid(1)
+              ]),
+
+
+
 
           ])->columnSpanFull(),
 

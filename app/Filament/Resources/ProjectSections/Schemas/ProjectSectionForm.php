@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\ProjectSections\Schemas;
 
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Repeater;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -17,21 +17,20 @@ class ProjectSectionForm
           ->schema([
             TextInput::make('type')
               ->required()
-              ->maxLength(255),
+              ->maxLength(255)
+              ->columnSpanFull(),
 
-            Repeater::make('name')
-              ->label('Name (translations)')
+            Grid::make(2)
               ->schema([
-                TextInput::make('en')
-                  ->label('English')
+                TextInput::make('name.ar')
+                  ->label('الاسم (بالعربية)')
                   ->required(),
 
-                TextInput::make('ar')
-                  ->label('Arabic'),
-              ])
-              ->columns(2)
-              ->defaultItems(1),
-          ]),
+                TextInput::make('name.en')
+                  ->label('Name (English)')
+                  ->required(),
+              ]),
+          ])->columnSpanFull(),
       ]);
   }
 }

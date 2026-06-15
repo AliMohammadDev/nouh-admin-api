@@ -42,6 +42,7 @@ class ProjectResource extends JsonResource
         'design_galleries' => GalleryResource::collection($galleries->where('project_section_id', 1)),
         'vr_galleries' => GalleryResource::collection($galleries->where('project_section_id', 2)),
         'real_galleries' => GalleryResource::collection($galleries->where('project_section_id', 3)),
+        'drawings_galleries' => GalleryResource::collection($galleries->where('project_section_id', 4)),
         'links' => $this->linkTypes->map(fn($link) => [
           'id' => $link->id,
           'name' => $link->name[$locale] ?? $link->name['en'] ?? '',

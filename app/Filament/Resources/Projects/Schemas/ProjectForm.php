@@ -44,6 +44,10 @@ class ProjectForm
                   ->label('رقم المشروع')
                   ->required(),
 
+                TextInput::make('likes_count')
+                  ->label('عدد الاعجابات')
+                  ->required(),
+
                 Toggle::make('is_featured')
                   ->label('مشروع مميز؟')
                   ->inline(false)

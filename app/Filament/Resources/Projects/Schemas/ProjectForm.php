@@ -46,8 +46,8 @@ class ProjectForm
 
                 TextInput::make('likes_count')
                   ->label('عدد الاعجابات')
-                  ->numeric() 
-                  ->nullable() 
+                  ->numeric()
+                  ->nullable()
                   ->default(0),
 
                 Toggle::make('is_featured')
@@ -205,6 +205,7 @@ class ProjectForm
                       ->label('صور الألبوم')
                       ->collection('photos')
                       ->multiple()
+                      ->disk('public')
                       ->required(),
                   ])
                   ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
@@ -280,6 +281,7 @@ class ProjectForm
                     SpatieMediaLibraryFileUpload::make('photos')
                       ->label('صور الألبوم')
                       ->collection('photos')
+                      ->disk('public')
                       ->multiple()
                       ->required(),
                   ])
@@ -321,6 +323,7 @@ class ProjectForm
                       ->label('صور المخططات والملفات')
                       ->collection('photos')
                       ->multiple()
+                      ->disk('public')
                       ->required(),
                   ])
                   ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {

@@ -133,49 +133,6 @@ class ProjectForm
 
 
 
-
-        // معرض الصور
-
-        // Section::make('معرض الصور والألبومات')
-        //   ->description('يمكنك إضافة عدة ألبومات وتوزيعها حسب أقسام المشروع (تصميم، تنفيذ، VR)')
-        //   ->schema([
-        //     Repeater::make('galleries')
-        //       ->relationship('galleries') // يربط التكرار بعلاقة الألبومات في المشروع
-        //       ->label('الألبومات')
-        //       ->schema([
-        //         Grid::make(3)
-        //           ->schema([
-        //             Select::make('project_section_id')
-        //               ->label('قسم الصور')
-        //               ->options(fn() => \App\Models\ProjectSection::all()->pluck('name', 'id')->map(fn($name) => $name[app()->getLocale()] ?? $name['en'] ?? ''))
-        //               ->required()
-        //               ->preload(),
-
-        //             TextInput::make('name.ar')
-        //               ->label('اسم الألبوم (بالعربية)')
-        //               ->placeholder('مثال: غرف النوم')
-        //               ->required(),
-
-        //             TextInput::make('name.en')
-        //               ->label('Album Name (EN)')
-        //               ->placeholder('e.g., Bedrooms')
-        //               ->required(),
-        //           ]),
-
-        //         // حقل رفع الصور المتعددة التابع لـ Spatie Media Library داخل الألبوم
-        //         SpatieMediaLibraryFileUpload::make('photos')
-        //           ->label('صور الألبوم')
-        //           ->collection('photos') // هامة جداً ليرتبط بالموديل الصحيح داخل الريبيتر
-        //           ->multiple()
-        //           ->required(),
-        //       ])
-        //       ->createItemButtonLabel('إضافة ألبوم جديد')
-        //       ->columns(1)
-        //       ->grid(1) // لجعل كل ألبوم يظهر كبطاقة منفصلة مريحة للعين
-        //   ]),
-
-
-
         Tabs::make('معرض ألبومات الصور للمشروع')
           ->tabs([
             Tabs\Tab::make('تصميم')

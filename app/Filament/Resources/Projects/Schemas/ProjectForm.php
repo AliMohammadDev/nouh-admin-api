@@ -205,7 +205,6 @@ class ProjectForm
                       ->label('صور الألبوم')
                       ->collection('photos')
                       ->multiple()
-                      ->disk('public')
                       ->required(),
                   ])
                   ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
@@ -281,7 +280,6 @@ class ProjectForm
                     SpatieMediaLibraryFileUpload::make('photos')
                       ->label('صور الألبوم')
                       ->collection('photos')
-                      ->disk('public')
                       ->multiple()
                       ->required(),
                   ])
@@ -323,7 +321,6 @@ class ProjectForm
                       ->label('صور المخططات والملفات')
                       ->collection('photos')
                       ->multiple()
-                      ->disk('public')
                       ->required(),
                   ])
                   ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {

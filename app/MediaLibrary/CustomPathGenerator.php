@@ -21,7 +21,6 @@ class CustomPathGenerator implements PathGenerator
       'directory_exists' => is_dir($fullPath),
     ]);
 
-    // التحقق من إمكانية إنشاء أو الكتابة في المجلد وتسجيل الأخطاء
     if (!file_exists($fullPath)) {
       try {
         if (!mkdir($fullPath, 0775, true) && !is_dir($fullPath)) {
@@ -33,14 +32,6 @@ class CustomPathGenerator implements PathGenerator
         Log::error("CustomPathGenerator Exception on mkdir", [
           'error' => $e->getMessage(),
           'full_path' => $fullPath
-        ]);
-      }
-    } else {
-      // التحقق هل المجلد قابل للكتابة (Permissions check)
-      if (!is_writable($fullPath)) {
-        Log::warning("CustomPathGenerator Warning: Directory is NOT writable!", [
-          'full_path' => $fullPath,
-          'permissions' => substr(sprintf('%o', fileperms($fullPath)), -4)
         ]);
       }
     }
@@ -82,7 +73,16 @@ class CustomPathGenerator implements PathGenerator
         $sectionSlug = Str::slug($sectionName);
 
         $base = "projects/{$sectionSlug}/section-{$section->id}/gallery-{$gallery->id}/{$media->id}";
-        Log::info("CustomPathGenerator: Generated base path successfully", ['base_path' => $base]);
+
+        // === إضافة جديدة: تسجيل رابط الصورة النهائي الذي يتم توليده ===
+        Log::info("CustomPathGenerator Debug URL & Path", [
+          'media_id' => $media->id,
+          'disk' => $media->disk,
+          'base_path' => $base,
+          'generated_url' => $media->getUrl(), // لتتبع رابط الـ URL الفعلي للمتصفح
+          'conversion_url' => $media->hasGeneratedConversion('default') ? $media->getUrl('default') : 'no-conversion'
+        ]);
+
         return $base;
       }
     } catch (\Exception $e) {

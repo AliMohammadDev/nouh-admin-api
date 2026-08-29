@@ -8,6 +8,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Support\Facades\Log;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -48,10 +49,21 @@ class ProjectGallery extends Model implements HasMedia
 
   public function registerMediaConversions(?Media $media = null): void
   {
-    $this->addMediaConversion('default')
-      ->fit(Fit::Max, 1000, 1000)
-      ->quality(70)
-      ->format('webp')
-      ->nonQueued();
+    Log::info("ProjectGallery: registerMediaConversions started", ['media_id' => $media->id ?? null]);
+
+    try {
+      $this->addMediaConversion('default')
+        ->fit(Fit::Max, 1000, 1000)
+        ->quality(70)
+        ->format('webp')
+        ->nonQueued();
+
+      Log::info("ProjectGallery: registerMediaConversions finished successfully");
+    } catch (\Exception $e) {
+      Log::error("ProjectGallery Error in registerMediaConversions: " . $e->getMessage(), [
+        'media_id' => $media->id ?? null,
+        'trace' => $e->getTraceAsString()
+      ]);
+    }
   }
 }

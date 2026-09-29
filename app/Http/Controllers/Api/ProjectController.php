@@ -7,7 +7,7 @@ use App\Http\Requests\Project\CreateProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
-use App\services\ProjectService;
+use App\Services\ProjectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -93,7 +93,7 @@ class ProjectController extends Controller
 
   public function topLiked()
   {
-    $topProjects = $this->projectService->findTopLiked(6); 
+    $topProjects = $this->projectService->findTopLiked(6);
     return ProjectResource::collection($topProjects);
   }
 

@@ -7,7 +7,7 @@ use App\Http\Requests\LinkType\CreateLinkTypeRequest;
 use App\Http\Requests\LinkType\UpdateLinkTypeRequest;
 use App\Http\Resources\LinkTypeResource;
 use App\Models\LinkType;
-use App\services\LinkTypeService;
+use App\Services\LinkTypeService;
 use Illuminate\Http\Request;
 
 class LinkTypeController extends Controller

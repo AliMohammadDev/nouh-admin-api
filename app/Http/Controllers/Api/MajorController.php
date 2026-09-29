@@ -7,7 +7,7 @@ use App\Http\Requests\Major\CreateMajorRequest;
 use App\Http\Requests\Major\UpdateMajorRequest;
 use App\Http\Resources\MajorResource;
 use App\Models\Major;
-use App\services\MajorService;
+use App\Services\MajorService;
 
 class MajorController extends Controller
 {

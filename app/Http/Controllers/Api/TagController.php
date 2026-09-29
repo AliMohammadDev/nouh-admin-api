@@ -7,7 +7,7 @@ use App\Http\Requests\Tag\CreateTagRequest;
 use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
-use App\services\TagService;
+use App\Services\TagService;
 
 class TagController extends Controller
 {

@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\LinkTypeController;
 use App\Http\Controllers\Api\MajorController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TagController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['setLocale'])->group(function () {
@@ -20,6 +22,10 @@ Route::middleware(['setLocale'])->group(function () {
 
   Route::apiResource('projects', ProjectController::class);
   Route::apiResource('tags', TagController::class);
+
+  Route::get('users/images', [UserController::class, 'userImages']);
+
+  Route::post('/contact', [ContactController::class, 'sendContact']);
 });
 
 // for image vr 360

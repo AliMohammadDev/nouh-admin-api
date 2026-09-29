@@ -37,7 +37,7 @@ class LinkTypeInfolist
               ]),
           ]),
 
-        Section::make('صور القسم')
+        Section::make('صور الرابط')
           ->icon('heroicon-o-photo')
           ->schema([
             SpatieMediaLibraryImageEntry::make('image')

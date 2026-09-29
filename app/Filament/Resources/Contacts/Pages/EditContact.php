@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Pages;
+namespace App\Filament\Resources\Contacts\Pages;
 
-use App\Filament\Resources\Categories\CategoryResource;
+use App\Filament\Resources\Contacts\ContactResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Actions;
 
 
-
-
-class EditCategory extends EditRecord
+class EditContact extends EditRecord
 {
-  protected static string $resource = CategoryResource::class;
+  protected static string $resource = ContactResource::class;
 
   protected function getHeaderActions(): array
   {
@@ -25,9 +23,5 @@ class EditCategory extends EditRecord
       ViewAction::make(),
       DeleteAction::make(),
     ];
-  }
-  protected function getRedirectUrl(): string
-  {
-    return $this->getResource()::getUrl('index');
   }
 }

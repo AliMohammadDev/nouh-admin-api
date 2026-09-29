@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Support\Enums\FontWeight;
 use Filament\Schemas\Components\Grid;
@@ -40,7 +41,6 @@ class UserInfolist
                     'super_admin' => 'danger',
                     default => 'primary',
                   })
-
                   ->formatStateUsing(fn(string $state): string => match ($state) {
                     'super_admin' => 'مدير نظام رئيسي',
                     'panel_user' => 'مستخدم لوحة التحكم',
@@ -54,6 +54,21 @@ class UserInfolist
                   ->color('success'),
               ]),
           ])->columnSpanFull(),
+
+        Section::make('صور المستخدم')
+          ->icon('heroicon-o-photo')
+          ->schema([
+            SpatieMediaLibraryImageEntry::make('images')
+              ->label('')
+              ->collection('user_images')
+              ->circular(false)
+              ->width(120)
+              ->extraImgAttributes([
+                'class' => 'object-cover rounded-xl shadow-md hover:scale-105 transition duration-300',
+              ]),
+          ])
+          ->columnSpanFull()
+          ->collapsible(),
       ]);
   }
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -51,6 +52,20 @@ class UserForm
                   ->dehydrated(fn($state) => filled($state)),
               ]),
           ]),
+
+        Section::make('صور المستخدم')
+          ->schema([
+            SpatieMediaLibraryFileUpload::make('images')
+              ->label('صور الملف الشخصي')
+              ->collection('user_images')
+              ->multiple()
+              ->reorderable()
+              ->image()
+              ->imageEditor()
+              ->maxFiles(5)
+              ->columnSpanFull(),
+          ]),
+
       ])->columns(1);
   }
 }

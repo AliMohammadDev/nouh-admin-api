@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
     return $panel
       ->default()
       ->id('admin')
-      ->path('admin')
+      ->path('hqn-dashboard')
       ->login()
       ->brandName('Nouh Agency')
       ->brandLogo(asset('logo-dark.png'))

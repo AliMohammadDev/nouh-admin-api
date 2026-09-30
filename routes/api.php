@@ -9,24 +9,26 @@ use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['setLocale'])->group(function () {
+Route::middleware('setLocale')->group(function (): void {
+  Route::apiResource('majors', MajorController::class)->only(['index', 'show']);
+  Route::apiResource('link-types', LinkTypeController::class)->only(['index', 'show']);
+  Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
 
-  Route::apiResource('majors', MajorController::class);
-  Route::apiResource('link-types', LinkTypeController::class);
-  Route::apiResource('categories', CategoryController::class);
+  // Register custom endpoints before the resource's {project} route.
+  Route::prefix('projects')->name('projects.')->controller(ProjectController::class)->group(function (): void {
+    Route::get('featured', 'featured')->name('featured');
+    Route::get('top-liked', 'topLiked')->name('top-liked');
+    Route::get('{project}/related', 'related')->name('related');
+    Route::post('{project}/like', 'like')->name('like');
+  });
 
-  Route::get('projects/featured', [ProjectController::class, 'featured']);
-  Route::get('projects/top-liked', [ProjectController::class, 'topLiked']);
-  Route::get('projects/{project}/related', [ProjectController::class, 'related']);
-  Route::post('/projects/{project}/like', [ProjectController::class, 'like']);
-
-  Route::apiResource('projects', ProjectController::class);
-  Route::apiResource('tags', TagController::class);
+  Route::apiResource('projects', ProjectController::class)->only(['index', 'show']);
+  Route::apiResource('tags', TagController::class)->only(['index', 'show']);
 
   Route::get('users/images', [UserController::class, 'userImages']);
 
-  Route::post('/contact', [ContactController::class, 'sendContact']);
+  Route::post('contact', [ContactController::class, 'sendContact']);
 });
 
-// for image vr 360
-Route::get('/vr-proxy', [ProjectController::class, 'vrProxy']);
+// The 360-degree image proxy does not require locale middleware.
+Route::get('vr-proxy', [ProjectController::class, 'vrProxy'])->name('vr-proxy');
